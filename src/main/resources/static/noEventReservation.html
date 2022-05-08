@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>식사예약</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+
+<!--===============================================================================================-->
+<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+
+
+<link rel="stylesheet" href="assets/css/main.css" />
+<noscript>
+	<link rel="stylesheet" href="assets/css/noscript.css" />
+</noscript>
+
+</head>
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+		<article>
+			<h2 class="major">식사 예약</h2>
+			<form action="/addReservation" method="post">
+				<div class="fields">
+					<div class="field">
+						<label for="date">날짜 </label> <input style="color: darkblue;"
+							id="date" name="date" type="date">
+					</div>
+					<script>
+						let date = new Date();
+						date.setDate(date.getDate() + 1);
+						let today = date.toISOString().substring(0, 10);
+						//다음날 예약가능
+						document.getElementById('date').value = today
+						//이전날짜 불가능하게
+						document.getElementById('date').setAttribute("min",today);
+						//3주간 예약가능
+						date.setDate(date.getDate() + 20);
+						let maxday = date.toISOString().substring(0, 10);
+						document.getElementById('date').setAttribute("max",maxday);
+					</script>
+					<div class="field">
+						<label for="time">시간</label> <select name="time" id="time">
+							<option value="11">11:00</option>
+							<option value="12">12:00</option>
+							<option value="13">13:00</option>
+							<option value="14">14:00</option>
+							<option value="17">17:00</option>
+							<option value="18">18:00</option>
+							<option value="19">19:00</option>
+							<option value="20">20:00</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="num_people">인원</label> <select name="num_people"
+							id="num_people">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="table">table</label> <select name="table" id="table">
+							<option value="auto">자동배정</option>
+						</select>
+					</div>
+				</div>
+				<ul class="actions">
+					<li><input type="submit" value="예약 완료" class="primary" /></li>
+					<li><input type="button" value="홈으로 가기"
+						onclick="location.href='/home';" /></li>
+				</ul>
+			</form>
+		</article>
+
+
+		<!-- Footer -->
+		<footer id="footer">
+			<p class="copyright">
+				&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.
+			</p>
+		</footer>
+
+	</div>
+
+	<!-- BG -->
+	<div id="bg"></div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
+</html>
