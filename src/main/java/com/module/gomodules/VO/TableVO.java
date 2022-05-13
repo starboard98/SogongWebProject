@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class TableVO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long oid
+    private long oid;
     private int number;
 
     public void setVal_oid(long val) {
@@ -23,5 +23,4 @@ public class TableVO {
     public int getVal_number() {
         return this.number;
     }
-
 }
