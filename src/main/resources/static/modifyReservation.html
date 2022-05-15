@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>예약 수정</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Clean Blog - Start Bootstrap Theme</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <!-- Font Awesome icons (free version)-->
+  <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+  <!-- Google fonts-->
+  <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="css/styles.css" rel="stylesheet" />
+
+  <!-- 라이트박스 -->
+  <style>
+            #darken-background {
+                position: absolute;
+                top: 0; left: 0; right: 0;
+                height: 100%;
+
+                display: none;
+                background: rgba(0, 0, 0, 0.9);
+                z-index: 10000;
+                overflow-y: scroll;
+            }
+
+            #lightbox {
+                width: 700px;
+                margin: 60px auto; padding: 30px 15px;
+
+                border: 1px solid #333333;
+                border-radius: 5px;
+                background: white;
+                box-shadow: 0 5px 5px rgba(34, 25, 25, 0.4);
+
+                text-align: center;
+            }
+            @media screen and (max-width: 767px){
+              #darken-background {
+                position: absolute;
+                top: 0; left: 0; right: 0;
+                width: 100%;
+                height: 100%;
+
+                display: none;
+                background: rgba(0, 0, 0, 0.9);
+                z-index: 10000;
+                overflow-y: scroll;
+              }
+              #lightbox{
+                width: auto;
+                margin: 40px auto; padding: 5px;
+
+                border: 1px solid #333333;
+                border-radius: 5px;
+                background: white;
+                box-shadow: 0 5px 5px rgba(34, 25, 25, 0.4);
+              }
+            }
+            .user-information {  overflow: hidden;  text-align: left; }
+            .user-information-image { float: left; width: 70px; }
+            .user-information-text { float: right; width: 620px;  }
+            .lightbox-splitter { margin: 10px 0; }
+            .box-img{
+              max-width: 100%;
+              height: auto;
+            }
+        </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="js/lightbox.js">//////////// lightbox띠워주기 ///////////</script>
+  <!-- 라이트박스 end -->
+</head>
+<body class="is-preload">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" href="index.html">$[사용자이름]님 환영합니다.#</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ms-auto py-4 py-lg-0">
+        <!--  상단 메뉴 바  -->
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+
+</nav>
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('assets/img/image_about.jpg')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="page-heading">
+          <h1>예약 수정</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Wrapper -->
+<tr id="wrapper">
+  <article>
+
+    <h2 class="major" align="center">예약 수정</h2>
+
+    <form action="/modifyReservation.do" method="post">
+      <table align="center">
+        <div class="field">
+          <input type="hidden" name="reservationoid"
+                 th:value="${mReserv.oid}"> <input type="hidden"
+                                                   name="eventoid" th:value="${mEvent.oid}">
+        </div>
+        <tr>
+          <th><label for="date">날짜 </label></th>
+          <th><input id="date" name="date" style="color: darkblue;" type="date" th:value="${mReserv.date}"></th>
+          <script>
+						let date = new Date();
+
+						date.setDate(date.getDate() + 1);
+						let today = date.toISOString().substring(0, 10);
+						//다음날 예약가능
+						document.getElementById('date').value = today
+						//이전날짜 불가능하게
+						document.getElementById('date').setAttribute("min",
+								today);
+						//3주간 예약가능
+						date.setDate(date.getDate() + 20);
+						let maxday = date.toISOString().substring(0, 10);
+						document.getElementById('date').setAttribute("max",
+								maxday);
+					</script>
+        <tr>
+          <th><label for="time">시각</label></th>
+          <th>
+            <select name="time" id="time">
+              <option value="11" th:selected="${mReserv.time.equals('11:00')}">11:00</option>
+              <option value="12" th:selected="${mReserv.time.equals('12:00')}">12:00</option>
+              <option value="13" th:selected="${mReserv.time.equals('13:00')}">13:00</option>
+              <option value="14" th:selected="${mReserv.time.equals('14:00')}">14:00</option>
+              <option value="17" th:selected="${mReserv.time.equals('17:00')}">17:00</option>
+              <option value="18" th:selected="${mReserv.time.equals('18:00')}">18:00</option>
+              <option value="19" th:selected="${mReserv.time.equals('19:00')}">19:00</option>
+              <option value="20" th:selected="${mReserv.time.equals('20:00')}">20:00</option>
+            </select>
+          </th>
+        </tr>
+        <tr>
+          <th><label for="num_people">인원</label></th>
+          <th>
+            <select name="num_people" id="num_people">
+              <option value="1"
+                      th:selected="${mReserv.people_number.equals(1)}">1</option>
+              <option value="2"
+                      th:selected="${mReserv.people_number.equals(2)}">2</option>
+              <option value="3"
+                      th:selected="${mReserv.people_number.equals(3)}">3</option>
+              <option value="4"
+                      th:selected="${mReserv.people_number.equals(4)}">4</option>
+              <option value="5"
+                      th:selected="${mReserv.people_number.equals(5)}">5</option>
+              <option value="6"
+                      th:selected="${mReserv.people_number.equals(6)}">6</option>
+            </select>
+          </th>
+        </tr>
+        <tr>
+          <th><label for="table">테이블</label></th>
+          <th>
+            <select name="table" id="table">
+              <option value="auto">자동배정</option>
+            </select>
+          </th>
+        </tr>>
+        <tr>
+          <th><label for="message">요청사항</label></th>
+          <th>
+            <textarea name="memo" id="memo" cols="30" rows="1" autofocus required wrap="hard" th:text="${mEvent.event_memo}"></textarea></th>
+        </tr>
+
+      </table>
+
+      <ul class="actions" align="center">
+        <input type="button" value="뒤로 가기" onclick="history.back()" />
+        <input type="submit" value="예약 수정" class="primary" />
+        <!-- 뒤로 가게 할지 아니면 예약 보는 화면으로 가게 할지 선택.. -->
+      </ul>
+    </form>
+  </article>
+
+
+  </div>
+
+  <!-- BG -->
+  <div id="bg"></div>
+
+  <!--
+  <footer class="border-top">
+    <div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item">
+              <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                                    </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#!">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+              </a>
+            </li>
+          </ul>
+          <div class="small text-center text-muted fst-italic">Copyright &copy; 소프트웨어공학 2022</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  -->
+  <!-- Bootstrap core JS-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Core theme JS-->
+  <script src="js/scripts.js"></script>
+
+
+  <!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
