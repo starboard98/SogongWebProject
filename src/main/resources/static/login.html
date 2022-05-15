@@ -26,7 +26,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html" style="font-size: 15px">회원가입</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="login.html" style="font-size: 15px">홈</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signin.html" style="font-size: 15px">회원가입</a></li>
                     </ul>
                 </div>
             </div>
@@ -58,19 +59,17 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                            <form id="loginForm" action="" method="POST">
                                 <div class="form-floating">
-                                    <input class="form-control" id="id" type="text" placeholder=" " data-sb-validations="required" />
+                                    <input class="form-control" id="id" type="text" placeholder=" " />
                                     <label for="id">ID</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A ID is required.</div>
                                 </div>
                                 <div class="form-floating">
-                                    <input class="form-control" id="password" type="password" placeholder=" " data-sb-validations="required" />
+                                    <input class="form-control" id="password" type="password" placeholder=" " />
                                     <label for="password">Password</label>
-                                    <div class="invalid-feedback" data-sb-feedback="email:email">Password is not valid.</div>
                                 </div>
                                 <br />
-                                <button class="btn btn-primary text-uppercase" id="loginButton" type="button" style="float: right">Login</button>
+                                <button class="btn btn-primary text-uppercase" id="loginButton" type="submit" style="float: right" onclick="login()">Login</button>
                             </form>
                         </div>
                     </div>
