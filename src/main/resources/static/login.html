@@ -59,19 +59,19 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                            <form id="contactForm" action="/login.do" method="post">
                                 <div class="form-floating">
-                                    <input class="form-control" id="id" type="text" placeholder=" " data-sb-validations="required" />
+                                    <input class="form-control" name="id" id="id" type="text" placeholder=" " data-sb-validations="required" />
                                     <label for="id">ID</label>
                                     <div class="invalid-feedback" data-sb-feedback="name:required">A ID is required.</div>
                                 </div>
                                 <div class="form-floating">
-                                    <input class="form-control" id="password" type="password" placeholder=" " data-sb-validations="required" />
+                                    <input class="form-control" name="password" id="password" type="password" placeholder=" " data-sb-validations="required" />
                                     <label for="password">Password</label>
                                     <div class="invalid-feedback" data-sb-feedback="email:email">Password is not valid.</div>
                                 </div>
                                 <br />
-                                <button class="btn btn-primary text-uppercase" id="loginButton" type="button" style="float: right">Login</button>
+                                <button class="btn btn-primary text-uppercase" id="loginButton" type="submit" style="float: right">Login</button>
                             </form>
                         </div>
                     </div>

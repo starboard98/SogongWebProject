@@ -1,4 +1,4 @@
-package com.module.gomodules.service;
+package com.module.gomodules.repository;
 
 import java.util.List;
 

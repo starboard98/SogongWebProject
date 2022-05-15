@@ -1,11 +1,11 @@
 package com.module.gomodules.service;
 
 import com.module.gomodules.VO.ReservationVO;
+import com.module.gomodules.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import com.module.gomodules.VO.ReservationVO;
 
 @Service
 public class ReservationService {
