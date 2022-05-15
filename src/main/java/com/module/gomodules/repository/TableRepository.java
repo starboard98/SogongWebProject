@@ -1,4 +1,4 @@
-package com.module.gomodules.service;
+package com.module.gomodules.repository;
 import com.module.gomodules.VO.TableVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
