@@ -33,13 +33,13 @@
             </div>
         </nav>
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('assets/img/login-bg.jpg')">
+        <header class="masthead" style="background-image: url('assets/img/clipboard-bg.jpg')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="page-heading">
-                            <h1>레스토랑 세미콜론</h1>
-                            <span class="subheading">온라인 예약 시스템</span>
+                            <h1>환영합니다!</h1>
+                            <span class="subheading">회원가입 페이지</span>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p>레스토랑 세미콜론에 오신 것을 환영합니다.<br>사전 예약을 원하시는 고개님들을 위한 온라인 서비스로<br>예약시 원하시는 좌석을 선택하고 메뉴를 미리 확인하실 수 있습니다.</p>
+                        <p>식사 시간대에는 가게가 많이 붐빌 수 있습니다.<br />맴버가 되어서 간편하게 예약하고 찾아오세요!</p>
                         <div class="my-5">
                             <!-- * * * * * * * * * * * * * * *-->
                             <!-- * * SB Forms Contact Form * *-->
@@ -59,17 +59,40 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            <form id="loginForm" action="" method="POST">
+                            <form id="signinForm" action="" data-sb-form-api-token="API_TOKEN" autocomplete="off">
                                 <div class="form-floating">
                                     <input class="form-control" id="id" type="text" placeholder=" " />
-                                    <label for="id">ID</label>
-                                </div>
-                                <div class="form-floating">
-                                    <input class="form-control" id="password" type="password" placeholder=" " />
-                                    <label for="password">Password</label>
+                                    <label for="name"> ID</label>
+                                    <br />
+                                    <button class="btn btn-primary text-uppercase disabled" id="idCheckButton" type="submit" style="height: 30pt;width: 90px;padding: 12px 0;font-size: 12px;float: right" onclick="idCheck()">ID Check</button>
                                 </div>
                                 <br />
-                                <button class="btn btn-primary text-uppercase" id="loginButton" type="submit" style="float: right" onclick="login()">Login</button>
+                                <br />
+                                    <div class="form-floating">
+                                        <input class="form-control" id="password" type="password" minlength="6" maxlength="15" placeholder=" " data-sb-validations="required" />
+                                        <label for="name">비밀번호</label>
+                                    </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="name" type="text" placeholder=" " data-sb-validations="required" />
+                                    <label for="name">이름</label>
+                                    <div class="invalid-feedback" data-sb-feedback="name:required">필수 입력사항입니다.</div>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="phone" type="tel" placeholder=" " data-sb-validations="required" />
+                                    <label for="phone">전화번호</label>
+                                    <div class="invalid-feedback" data-sb-feedback="phone:required">필수 입력사항입니다.</div>
+                                </div>
+                                <br />
+                                <!-- Submit success message-->
+                                <!---->
+                                <!-- This is what your users will see when the form-->
+                                <!-- has successfully submitted-->
+                                <div class="d-none" id="submitSuccessMessage">
+                                    <div class="text-center mb-3">
+                                        <div class="fw-bolder">맴버가 되신 것을 환영합니다!</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary text-uppercase disabled" id="submitButton" type="submit" style="float: right" onclick="signin()">Submit</button>
                             </form>
                         </div>
                     </div>
