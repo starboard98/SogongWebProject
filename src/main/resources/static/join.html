@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<!--
+	Licensed under (https://colorlib.com/wp/template/signup-form-02/)
+	by https://colorlib.com/wp/templates/
+	Free for personal and commercial use under the CCA 3.0 license
+-->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
+            rel="stylesheet">
+
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <script type="text/javascript">
+        function getCheck() {
+            const pass = document.getElementById("password").value;
+            const repass = document.getElementById("re-password").value;
+            let result = '';
+            var bodyTag = document.getElementById("result");
+            if (pass === repass) {
+                result = "비밀번호가 일치합니다.";
+                bodyTag.style.color = "green";
+            } else {
+                result = "비밀번호가 일치하지 않습니다";
+                bodyTag.style.color = "red";
+            }
+            document.getElementById('result').innerText = result;
+        }
+
+        function getCheckPolicy(event) {
+            let result = '';
+            var bodyTag = document.getElementById("checkpolicy");
+            if (!event.target.checked) {
+                result = "동의하지 않으시면 회원가입이 불가능합니다.";
+                bodyTag.style.color = "red";
+            }
+
+            bodyTag.innerText = result;
+        }
+    </script>
+
+
+    <title>join</title>
+</head>
+<body>
+
+<div class="d-lg-flex half">
+    <div class="bg order-1 order-md-2"
+         style="background-image: url('images/bg_1.jpg');"></div>
+    <div class="contents order-2 order-md-1">
+
+
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+
+                <div class="col-md-7 py-5">
+                    <h3>Register</h3>
+                    <p class="mb-4">회원가입 해주셔서 감사합니다.</p>
+                    <form action="/joinUs.do" method="post">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group first">
+                                    <label for="id">ID: </label> <input id="id" name="id"
+                                                                        type="text" placeholder="id" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group first">
+                                    <label for="password">PW: </label> <input id="password"
+                                                                              class="form-control" name="password" type="password"
+                                                                              onkeyup='getCheck()' placeholder="password">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group first">
+                                    <label for="re-password">RePW: </label> <input
+                                        id="re-password" class="form-control" name="re-password"
+                                        type="password" placeholder="re-password"
+                                        onkeyup='getCheck()'>
+                                    <div id='result'></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group first">
+                                    <label for="name">NAME: </label> <input id="name" name="name"
+                                                                            class="form-control" placeholder="name" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group first">
+                                    <label for="name">PHONENUMBER: </label> <input
+                                        id="phonenumber" class="form-control"
+                                        placeholder="+00 0000 000 0000" name="phonenumber"
+                                        type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex mb-5 mt-4 align-items-center">
+                            <div class="d-flex align-items-center">
+                                <label class="control control--checkbox mb-0"><span
+                                        class="caption">Creating an account means you're okay
+											with our <a href="#">Terms and Conditions</a> and our <a
+                                            href="#">Privacy Policy</a>.
+									</span> <input type="checkbox" name='checckpolicy' id='checckpolicy'
+                                                   onclick="getCheckPolicy(event)" checked="checked">
+                                    <div class="control__indicator"></div>
+                                    <div id="checkpolicy"></div></label>
+
+                            </div>
+                        </div>
+
+
+
+                        <input type="submit" value="회원가입" class="btn px-5 btn-primary">
+                        <input type="button" style="text-align: center"
+                               onclick="location.href='/index';" value="홈으로"
+                               class="btn px-5 btn-primary">
+                    </form>
+
+                </div>
+            </div>
+            <span> &copy; Untitled. Design: <a
+                    href="https://colorlib.com/wp/template/signup-form-02/">colorlib</a>.
+				</span>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/join.js"></script>
+</body>
+</html>
+
