@@ -19,26 +19,27 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="login.html">Semicolon</a>
+                <a class="navbar-brand" href="home.html">Semicolon</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html" style="font-size: 15px">회원가입</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html" style="font-size: 15px">홈</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signin.html" style="font-size: 15px">회원가입</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('assets/img/login-bg.jpg')">
+        <header class="masthead" style="background-image: url('assets/img/clipboard-bg.jpg')">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="page-heading">
-                            <h1>레스토랑 세미콜론</h1>
-                            <span class="subheading">온라인 예약 시스템</span>
+                            <h1>환영합니다!</h1>
+                            <span class="subheading">회원가입 페이지</span>
                         </div>
                     </div>
                 </div>
@@ -49,7 +50,7 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <p>레스토랑 세미콜론에 오신 것을 환영합니다.<br>사전 예약을 원하시는 고개님들을 위한 온라인 서비스로<br>예약시 원하시는 좌석을 선택하고 메뉴를 미리 확인하실 수 있습니다.</p>
+                        <p>식사 시간대에는 가게가 많이 붐빌 수 있습니다.<br />맴버가 되어서 간편하게 예약하고 찾아오세요!</p>
                         <div class="my-5">
                             <!-- * * * * * * * * * * * * * * *-->
                             <!-- * * SB Forms Contact Form * *-->
@@ -58,19 +59,40 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                            <form id="signinForm" action="" data-sb-form-api-token="API_TOKEN" autocomplete="off">
                                 <div class="form-floating">
-                                    <input class="form-control" id="id" type="text" placeholder=" " data-sb-validations="required" />
-                                    <label for="id">ID</label>
-                                    <div class="invalid-feedback" data-sb-feedback="name:required">A ID is required.</div>
-                                </div>
-                                <div class="form-floating">
-                                    <input class="form-control" id="password" type="password" placeholder=" " data-sb-validations="required" />
-                                    <label for="password">Password</label>
-                                    <div class="invalid-feedback" data-sb-feedback="email:email">Password is not valid.</div>
+                                    <input class="form-control" id="id" type="text" placeholder=" " />
+                                    <label for="name"> ID</label>
+                                    <br />
+                                    <button class="btn btn-primary text-uppercase disabled" id="idCheckButton" type="submit" style="height: 30pt;width: 90px;padding: 12px 0;font-size: 12px;float: right" onclick="idCheck()">ID Check</button>
                                 </div>
                                 <br />
-                                <button class="btn btn-primary text-uppercase" id="loginButton" type="button" style="float: right">Login</button>
+                                <br />
+                                    <div class="form-floating">
+                                        <input class="form-control" id="password" type="password" minlength="6" maxlength="15" placeholder=" " data-sb-validations="required" />
+                                        <label for="name">비밀번호</label>
+                                    </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="name" type="text" placeholder=" " data-sb-validations="required" />
+                                    <label for="name">이름</label>
+                                    <div class="invalid-feedback" data-sb-feedback="name:required">필수 입력사항입니다.</div>
+                                </div>
+                                <div class="form-floating">
+                                    <input class="form-control" id="phone" type="tel" placeholder=" " data-sb-validations="required" />
+                                    <label for="phone">전화번호</label>
+                                    <div class="invalid-feedback" data-sb-feedback="phone:required">필수 입력사항입니다.</div>
+                                </div>
+                                <br />
+                                <!-- Submit success message-->
+                                <!---->
+                                <!-- This is what your users will see when the form-->
+                                <!-- has successfully submitted-->
+                                <div class="d-none" id="submitSuccessMessage">
+                                    <div class="text-center mb-3">
+                                        <div class="fw-bolder">맴버가 되신 것을 환영합니다!</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary text-uppercase disabled" id="submitButton" type="submit" style="float: right" onclick="signin()">Submit</button>
                             </form>
                         </div>
                     </div>
@@ -79,39 +101,6 @@
         </main>
         <!-- Footer-->
         <footer class="border-top">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <ul class="list-inline text-center">
-                            <li class="list-inline-item">
-                                <a href="#!">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#!">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="https://github.com/wookjaegoo/SogongWebProject">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="small text-center text-muted fst-italic">Copyright &copy; SE Semicolon 2022</div>
-                    </div>
-                </div>
-            </div>
         </footer>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
