@@ -8,8 +8,9 @@ import com.module.gomodules.VO.ReservationVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public interface ReservationRepository extends JpaRepository<ReservationVO, Long> {
     @Query("SELECT COUNT(*) FROM RESERVATION WHERE start_time = ?1 AND table_number = ?2 AND isdeleted = 0")
     public int numberOfReservationBytimeAndtid(String start_time, int table_number);
