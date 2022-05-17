@@ -19,14 +19,14 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="home.html">Semicolon</a>
+                <a class="navbar-brand" href="login.html">Semicolon</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html" style="font-size: 15px">홈</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="login.html" style="font-size: 15px">홈</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signin.html" style="font-size: 15px">회원가입</a></li>
                     </ul>
                 </div>
@@ -62,15 +62,15 @@
                             <form id="signinForm" action="" data-sb-form-api-token="API_TOKEN" autocomplete="off">
                                 <div class="form-floating">
                                     <input class="form-control" id="id" type="text" placeholder=" " />
-                                    <label for="name"> ID</label>
+                                    <label for="id">ID</label>
                                     <br />
-                                    <button class="btn btn-primary text-uppercase disabled" id="idCheckButton" type="submit" style="height: 30pt;width: 90px;padding: 12px 0;font-size: 12px;float: right" onclick="idCheck()">ID Check</button>
+                                    <button class="btn btn-primary text-uppercase" id="idCheckButton" type="submit" style="height: 30pt;width: 90px;padding: 12px 0;font-size: 12px;float: right" onclick="idCheck()">ID Check</button>
                                 </div>
                                 <br />
                                 <br />
                                     <div class="form-floating">
                                         <input class="form-control" id="password" type="password" minlength="6" maxlength="15" placeholder=" " data-sb-validations="required" />
-                                        <label for="name">비밀번호</label>
+                                        <label for="password">비밀번호</label>
                                     </div>
                                 <div class="form-floating">
                                     <input class="form-control" id="name" type="text" placeholder=" " data-sb-validations="required" />
@@ -92,7 +92,7 @@
                                         <div class="fw-bolder">맴버가 되신 것을 환영합니다!</div>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary text-uppercase disabled" id="submitButton" type="submit" style="float: right" onclick="signin()">Submit</button>
+                                <button class="btn btn-primary text-uppercase" id="submitButton" type="submit" style="float: right" onclick="signin()">Submit</button>
                             </form>
                         </div>
                     </div>
