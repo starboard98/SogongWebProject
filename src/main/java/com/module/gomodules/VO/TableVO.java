@@ -14,7 +14,7 @@ public class TableVO {
     public void setVal_oid(long val) {
         this.oid = val;
     }
-    public void setVal_rid(int val) {
+    public void setVal_number(int val) {
         this.number = val;
     }
     public long getVal_oid() {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" lang="en" xmlns:th="http://www.thymeleaf.org">
     <title>테이블 보기</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
@@ -130,12 +130,12 @@
                 <td>테이블 번호</td>
             </tr>
             </thead>
-            <tr th:each="list : ${table}">
-                <td th:text="${list.getVal_number()}"></td>
+            <tr th:each="tableVO : ${showTable}">
+                <td th:text="${tableVO.number}"></td>
                 <td>
                     <form action="/deleteTable.do" style="width: 94px;">
-                        <input type="hidden" name="tableNumber"
-                               th:value="${list.getVal_oid()}"/> <input type="submit"
+                        <input type="hidden" th:name="tableNumber"
+                               th:value="${tableVO.oid()}"/> <input type="submit"
                                                                         value="삭제">
                     </form>
                 </td>

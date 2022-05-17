@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UserController {
@@ -187,9 +184,11 @@ public class UserController {
         return "noEventReservation";
     }
 
-    @RequestMapping(value = "/showTableView")
-    public String showTableView() {
-        return "showTableView";
+    @RequestMapping(value = "/showTable", method = RequestMethod.GET)
+    public String showTable(@RequestParam("number")int number, @RequestParam("oid") long oid, Model model) {
+        model.addAttribute("number", number);
+        model.addAttribute("oid", oid);
+        return "showTable";
     }
 
 //    @RequestMapping(value = "/showUserReservation")
