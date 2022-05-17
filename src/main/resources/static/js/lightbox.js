@@ -1,5 +1,6 @@
 // 라이트 박스
-var size=3;         ////////size는 select시 검색된 사이즈////////
+////////size는 select시 검색된 사이즈, 이용중인 사용자의 예약 개수////////
+size = 30;
 function LightBoxAct(num){
   var dark="#darken-background:nth-child("+num+")";
   var p=".paper:nth-child("+num+")";
