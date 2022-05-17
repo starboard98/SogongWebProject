@@ -130,8 +130,8 @@
             <tr th:each="list : ${list}">
                 <td th:text="${list.getVal_oid()}"></td>
                 <td th:text="${list.getVal_start_time()}"></td>
-                <td th:text="${list.getVal_tid()}"></td>
-                <td th:text="${list.getVal_people_number()}"></td>
+                <td th:text="${list.getVal_table_number()}"></td>
+                <td th:text="${list.getVal_covers()}"></td>
                 <td th:text="${list.getVal_rank()}"></td>
                 <td>
                     <form action="/increaseNoShow.do" style="width: 94px;">
