@@ -19,30 +19,30 @@
 
     <!-- 라이트박스 -->
     <style>
+        #darken-background {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 100%;
+
+            display: none;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            overflow-y: scroll;
+        }
+
+        #lightbox {
+            width: 700px;
+            margin: 60px auto; padding: 30px 15px;
+
+            border: 1px solid #333333;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 5px 5px rgba(34, 25, 25, 0.4);
+
+            text-align: center;
+        }
+        @media screen and (max-width: 767px){
             #darken-background {
-                position: absolute;
-                top: 0; left: 0; right: 0;
-                height: 100%;
-
-                display: none;
-                background: rgba(0, 0, 0, 0.9);
-                z-index: 10000;
-                overflow-y: scroll;
-            }
-
-            #lightbox {
-                width: 700px;
-                margin: 60px auto; padding: 30px 15px;
-
-                border: 1px solid #333333;
-                border-radius: 5px;
-                background: white;
-                box-shadow: 0 5px 5px rgba(34, 25, 25, 0.4);
-
-                text-align: center;
-            }
-            @media screen and (max-width: 767px){
-              #darken-background {
                 position: absolute;
                 top: 0; left: 0; right: 0;
                 width: 100%;
@@ -52,8 +52,8 @@
                 background: rgba(0, 0, 0, 0.9);
                 z-index: 10000;
                 overflow-y: scroll;
-              }
-              #lightbox{
+            }
+            #lightbox{
                 width: auto;
                 margin: 40px auto; padding: 5px;
 
@@ -61,24 +61,24 @@
                 border-radius: 5px;
                 background: white;
                 box-shadow: 0 5px 5px rgba(34, 25, 25, 0.4);
-              }
             }
-            .user-information {  overflow: hidden;  text-align: left; }
-            .user-information-image { float: left; width: 70px; }
-            .user-information-text { float: right; width: 620px;  }
-            .lightbox-splitter { margin: 10px 0; }
-            .box-img{
-              max-width: 100%;
-              height: auto;
-            }
+        }
+        .user-information {  overflow: hidden;  text-align: left; }
+        .user-information-image { float: left; width: 70px; }
+        .user-information-text { float: right; width: 620px;  }
+        .lightbox-splitter { margin: 10px 0; }
+        .box-img{
+            max-width: 100%;
+            height: auto;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/lightbox.js">//////////// lightbox띠워주기 ///////////</script>
     <!-- 라이트박스 end -->
     <script>
-	function deleteTable() {
-		location.href="/deleteTable.do";
-	}
+        function deleteTable() {
+            location.href="/deleteTable.do";
+        }
     </script>
 </head>
 

@@ -1,5 +1,6 @@
 package com.module.gomodules.service;
 import com.module.gomodules.VO.TableVO;
+import com.module.gomodules.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

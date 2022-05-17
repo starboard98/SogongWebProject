@@ -34,6 +34,12 @@ dependencies { // db 의존성 추가
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	//스프링 시큐리티 관련
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security:spring-security-test'
+	implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
+	//validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 
