@@ -4,7 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.module.gomodules.VO.CustomerVO;
+import com.module.gomodules.VO.ReservationVO;
 import com.module.gomodules.repository.UserRepository;
+import com.module.gomodules.service.ReservationService;
+import com.module.gomodules.service.TableService;
 import com.module.gomodules.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -122,7 +125,7 @@ public class UserController {
             session.setAttribute("level", vo.getVal_level());
 
             // if (vo.getVal_level() == 0)
-            return "<script> alert('로그인 되셨습니다!'); location.href= '/index.html'; </script>";
+            return "<script> alert('로그인 되셨습니다!'); location.href= '/home.html'; </script>";
 //            return "<script>location.href= '/index'; </script>";
         } else {
             System.out.println("False");
@@ -228,52 +231,53 @@ public class UserController {
 //        return "showUserReservation";
 //    }
 
-//    @Autowired
-//    ReservationService ReservationService;
-//
-//    @Autowired
-//    TableService TableService;
-//
-//    @RequestMapping(value = "/addReservation")
-//    public String addReservation(HttpServletRequest request, ReservationVO vo, Model model) {
-//        HttpSession session = request.getSession(true);// 현재 세션 로드
-//        if (session.getAttribute("id") == null)
-//            return "/index";
-//        vo.setVal_uid((int) session.getAttribute("oid"));// 세션의 oid값 가져오기
-//        vo.setVal_people_number(Integer.parseInt(request.getParameter("num_people")));// 인원수 가져오기
-//
-//        String date = request.getParameter("date");// 날짜 가져오기
-//        String time = request.getParameter("time");// 시간 가져오기
-//        String datetime = date + " " + time;
-//        vo.setVal_start_time(datetime);// 날짜 + 시간 가져오기
-//
-//        // 자동배정의 tid 구하기
-//        int tid = 1;
-//        int mintablewait = 9999;
-//        int numOftable = TableService.numberofTable(); // 테이블의개수
-//        for (int j = 1; j <= numOftable; j++) {
-//            int i = ReservationService.findWaitRank(datetime, j);
-//            if (i < mintablewait) {
-//                mintablewait = i;
-//                tid = j;
-//            }
-//        }
-//
-//        int i = ReservationService.findWaitRank(datetime, tid);// 동일날짜 동시간대에 있는 예약의 개수 리턴
-//        if (i != 0)/* 이미 해당시간에 예약이 존재한다면 */ {
-//            vo.setVal_wait(1);// 예약이 존재한다.
-//            vo.setVal_rank(i);// 대기순서는 i
-//        } else/* 해당시간에 예약이 없다면 */ {
-//            vo.setVal_wait(0);
-//            vo.setVal_rank(0);
-//        }
-//
-//        vo.setVal_tid(tid);
-//        ReservationService.addReservation(vo);
-//        model.addAttribute("userid", session.getAttribute("id"));
-//        model.addAttribute("level", session.getAttribute("level"));
-//        return "home";
-//    }
+    @Autowired
+    com.module.gomodules.service.ReservationService ReservationService;
+
+    @Autowired
+    com.module.gomodules.service.TableService TableService;
+
+    @RequestMapping(value = "/addReservation")
+    public String addReservation(HttpServletRequest request, ReservationVO vo, Model model) {
+        HttpSession session = request.getSession(true);// 현재 세션 로드
+        if (session.getAttribute("id") == null)
+            return "/index";
+        vo.setVal_uid((int) session.getAttribute("oid"));// 세션의 oid값 가져오기
+
+        vo.setVal_covers(Integer.parseInt(request.getParameter("num_people")));// 인원수 가져오기
+
+        String date = request.getParameter("date");// 날짜 가져오기
+        String time = request.getParameter("time");// 시간 가져오기
+        String datetime = date + " " + time;
+        vo.setVal_start_time(datetime);// 날짜 + 시간 가져오기
+
+        // 자동배정의 tid 구하기
+        int table_number = 1;
+        int mintablewait = 9999;
+        int numOftable = TableService.numberofTable(); // 테이블의개수
+        for (int j = 1; j <= numOftable; j++) {
+            int i = ReservationService.findWaitRank(datetime, j);
+            if (i < mintablewait) {
+                mintablewait = i;
+                table_number = j;
+            }
+        }
+
+        int i = ReservationService.findWaitRank(datetime, table_number);// 동일날짜 동시간대에 있는 예약의 개수 리턴
+        if (i != 0)/* 이미 해당시간에 예약이 존재한다면 */ {
+            vo.setVal_wait(1);// 예약이 존재한다.
+            vo.setVal_rank(i);// 대기순서는 i
+        } else/* 해당시간에 예약이 없다면 */ {
+            vo.setVal_wait(0);
+            vo.setVal_rank(0);
+        }
+
+        vo.setVal_table_number(table_number);
+        ReservationService.addReservation(vo);
+        model.addAttribute("userid", session.getAttribute("id"));
+        model.addAttribute("level", session.getAttribute("level"));
+        return "/home";
+    }
 //
 //    @Autowired
 //    EventService EventService;

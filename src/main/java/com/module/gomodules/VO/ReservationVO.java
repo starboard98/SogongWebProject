@@ -18,7 +18,11 @@ public class ReservationVO {
     private String date;
     private int table_number;
     private int rank;
+
+    private int wait;
     private int isdeleted;
+
+    public void setVal_wait(int val) {this.wait=val;}
 
     public void setVal_oid(int val) {
         this.oid = val;
