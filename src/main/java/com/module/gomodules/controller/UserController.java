@@ -1,11 +1,5 @@
 package com.module.gomodules.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -38,7 +32,7 @@ public class UserController {
         System.out.print(vo.getVal_id());
         if (userRepository.findById(vo.getVal_id()) != null) {
             System.out.println("중복아이디 감지");
-            return "<script> alert('중복된 아이디 입니다.');  location.href= '/join'; </script>";
+            return "<script> alert('중복된 아이디 입니다.');  location.href= '/signIn.html'; </script>";
         }
         String password = req.getParameter("password");
         String encoded_password = passwordEncoder.encode(password);
@@ -52,20 +46,20 @@ public class UserController {
         vo.setVal_phonenumber(req.getParameter("phonenumber"));
         System.out.print(vo.getVal_password());
         /* 확인 부분 */
-        if (vo.getVal_id().equals("") || vo.getVal_name().equals("") || vo.getVal_password().equals("")
-                || vo.getVal_phonenumber().equals(""))
-            return "<script> alert('정보를 모두 입력해주세요.');  location.href= '/join'; </script>";
-
-        if (!req.getParameter("re-password").contentEquals(req.getParameter("password")))
-            return "<script> alert('두 비밀번호가 다릅니다');  location.href= '/join'; </script>";
-
-        if (req.getParameter("checckpolicy") == null)
-            return "<script> alert('보안정책에 동의해 주셔야 회원가입이 가능합니다.');  location.href= '/join'; </script>";
+//        if (vo.getVal_id().equals("") || vo.getVal_name().equals("") || vo.getVal_password().equals("")
+//                || vo.getVal_phonenumber().equals(""))
+//            return "<script> alert('정보를 모두 입력해주세요.');  location.href= '/signIn.html'; </script>";
+//
+//        if (!req.getParameter("re-password").contentEquals(req.getParameter("password")))
+//            return "<script> alert('두 비밀번호가 다릅니다');  location.href= '/signIn.html'; </script>";
+//
+//        if (req.getParameter("checckpolicy") == null)
+//            return "<script> alert('보안정책에 동의해 주셔야 회원가입이 가능합니다.');  location.href= '/signIn.html'; </script>";
 
         /* 끝 */
-
+        System.out.println("여기까지 12:58");
         userService.joinUser(vo);
-        return "<script> location.href= '/index'; </script>";
+        return "<script> alert('가입 되셨습니다!'); location.href= '/index.html'; </script>";
     }
 
     @RequestMapping(value = "/join")
@@ -78,6 +72,19 @@ public class UserController {
         System.out.print("nooo..");
         return "failed";
     }
+
+//    @ResponseBody // return to body
+//    @RequestMapping(value = "/idCheck.do", method = RequestMethod.GET)
+//    public String idCheck(HttpServletRequest req, CustomerVO vo) {
+//        vo.setVal_id(req.getParameter("user_id"));
+//        System.out.print(vo.getVal_id());
+//        if (userRepository.findById(vo.getVal_id()) != null) {
+//            System.out.println("중복아이디 감지");
+//            return "<script> alert('중복된 아이디 입니다.');  location.href= '/signIn.html'; </script>";
+//        }
+//        else
+//            return "<script> location.href= '/signIn.html'; </script>";
+//    }
 
     // login
 
@@ -115,11 +122,11 @@ public class UserController {
             session.setAttribute("level", vo.getVal_level());
 
             // if (vo.getVal_level() == 0)
-             return "<script> alert('로그인 되셨습니다!'); location.href= '/index'; </script>";
+            return "<script> alert('로그인 되셨습니다!'); location.href= '/index.html'; </script>";
 //            return "<script>location.href= '/index'; </script>";
         } else {
             System.out.println("False");
-            return "<script> alert('아이디와 비밀번호가 일치하지 않습니다.');  location.href= '/index'; </script>";
+            return "<script> alert('아이디와 비밀번호가 일치하지 않습니다.');  location.href= '/index.html'; </script>";
         }
 
     }
