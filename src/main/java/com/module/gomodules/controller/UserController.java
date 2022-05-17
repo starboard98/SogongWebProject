@@ -93,14 +93,17 @@ public class UserController {
     public String signIn(HttpSession session, HttpServletRequest req) {
         String id = req.getParameter("id");
         String pw = req.getParameter("password");
+
         /*
          * if (id.equals("")) { return
          * "<script> alert('아이디를 입력해주세요.');  location.href= '/index'; </script>"; } if
          * (pw.equals("")) { return
          * "<script> alert('비밀번호를 입력하세요');  location.href= '/index'; </script>"; }
          */
+
+        System.out.println("여기까지 3:09");
         if (userRepository.findById(id) == null) {
-            return "<script> alert('없는 아이디 입니다.');  location.href= '/index'; </script>";
+            return "<script> alert('없는 아이디 입니다.');  location.href= '/index.html'; </script>";
             // return "index";
         }
 
