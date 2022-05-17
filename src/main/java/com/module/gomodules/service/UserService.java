@@ -21,7 +21,7 @@ public class UserService {
 
     public boolean loginCheck(String id, String pw) {
         /*test*/
-        //System.out.println("   loginCheck 동작 ");
+        System.out.println("   loginCheck 동작 ");
         System.out.println("id: "+ id+"pw: "+pw);
 
         CustomerVO vo = userRepository.findById(id);
