@@ -12,35 +12,40 @@ public class ReservationService {
     @Autowired
     ReservationRepository Repository;
 
-    public void addReservation(ReservationVO vo){
+    public void addReservation(ReservationVO vo) {
         System.out.println("예약 추가");
         Repository.save(vo);
         System.out.println("예약 추가 성공");
     }
+
     public int findWaitRank(String time, int tableid) {
         return Repository.numberOfReservationBytimeAndtid(time, tableid);
     }
-    public int findByTableId(int uid){
+
+    public int findByTableId(int uid) {
         return Repository.numberOfReservationByTableId(uid);
     }
-    public List<ReservationVO> getReservationListAll(){
+
+    public List<ReservationVO> getReservationListAll() {
         //Sort sort = Sort.by(Sort.Direction.DESC, "oid");
         return Repository.findAll();
     }
 
-    public int countReservationByMonth(String t1, String t2){
+    public int countReservationByMonth(String t1, String t2) {
         return Repository.numberOfReservationByTime(t1, t2);
     }
 
     public List<ReservationVO> getReservationList(int uid) {
         return Repository.findAllByuid(uid);
     }
+
+
     public void deleteReservationbyoid(int oid) {
         // TODO Auto-generated method stub
         Repository.deleteReservationbyoid(oid);
     }
-
-
+}
+/* 유저의 예약 목록을 불러오는 기능
     public List<ReservationVO> getReservationListForUser(int uid){
         return Repository.findAllByuidForUser(uid);
     }
@@ -48,8 +53,7 @@ public class ReservationService {
         int oid = vo.getVal_oid();
         String start_time = vo.getVal_start_time();
         int tid =vo.getVal_table_number();
-        int rank = vo.getVal_rank();
-        List<ReservationVO> list = Repository.findAllReservationBytimeAndtidAndRank(start_time, tid, rank);
+        List<ReservationVO> list = Repository.findAllReservationBytimeAndtidAndRank(start_time, tid);
         if(list.size() == 0) {//이 예약 뒤로 대기중인 예약이 없다면
             Repository.updateReservationIsdeleted(oid);
         }
@@ -64,17 +68,18 @@ public class ReservationService {
             Repository.updateReservationIsdeleted(oid);
         }
     }
-    public void modifyReservation(int oid, String input_start_time,int input_people_number, int new_tid, int new_wait, int new_rank) {
+    /*
+    public void modifyReservation(int oid, String input_start_time,int input_people_number, int new_tid) {
         ReservationVO vo = Repository.findByOid(oid);
         int tid = vo.getVal_table_number();
-        int rank = vo.getVal_rank();
+        //int rank = vo.getVal_rank();
         String origin_start_time = vo.getVal_start_time();
 
 
         //변경이전 시간대의 rank영향받는 예약들의 리스트임
-        List<ReservationVO> list = Repository.findAllReservationBytimeAndtidAndRank(origin_start_time, tid, rank);
+        List<ReservationVO> list = Repository.findAllReservationBytimeAndtidAndRank(origin_start_time, tid);
         if(list.size() == 0) {//이 예약 뒤로 대기중인 예약이 없다면
-            Repository.updateReservationValues(input_people_number, input_start_time, new_tid, new_wait, new_rank, oid);
+            Repository.updateReservationValues(input_people_number, input_start_time, new_tid, oid);
         }
 
         else { //이 예약 뒤로 대기중인 예약이 있다면
@@ -84,17 +89,19 @@ public class ReservationService {
                 Repository.updateReservationRank(nowoid);//rank 조절
                 Repository.updateReservationWait(nowoid);//wait 조절
             }
-            Repository.updateReservationValues(input_people_number, input_start_time, new_tid, new_wait, new_rank, oid);
+            Repository.updateReservationValues(input_people_number, input_start_time, new_tid, oid);
         }
     }
 
     public ReservationVO findByOid(int oid){
         return Repository.findByOid(oid);
     }
-
+*/
+    /*
     public void updateReservationPeopleNumber(int people_num, int oid) {
         Repository.updateReservationPeopleNumber(people_num, oid);
     }
 
     public int countReservationByUser(int oid){ return Repository.countReservationByUser(oid); }
 }
+*/

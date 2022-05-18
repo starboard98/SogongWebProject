@@ -39,9 +39,6 @@ public class modifyingDateAndTime {
 
 
     }
-    public void setVal_rank(int rank){
-        this.rank=rank;
-    }
     public void setVal_table_number(int table_number){
         this.table_number=table_number;
     }

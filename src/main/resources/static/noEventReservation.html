@@ -30,8 +30,7 @@
 			<form action="/addReservation" method="post">
 				<div class="fields">
 					<div class="field">
-						<label for="date">날짜 </label> <input style="color: darkblue;"
-							id="date" name="date" type="date">
+						<label for="date">날짜 </label> <input id="date" name="date" type="date">
 					</div>
 					<script>
 						let date = new Date();
@@ -59,8 +58,7 @@
 						</select>
 					</div>
 					<div class="field">
-						<label for="num_people">인원</label> <select name="num_people"
-							id="num_people">
+						<label for="num_people">인원</label> <select name="num_people" id="num_people">
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
@@ -70,8 +68,15 @@
 						</select>
 					</div>
 					<div class="field">
-						<label for="table">table</label> <select name="table" id="table">
-							<option value="auto">자동배정</option>
+						<label for="table">테이블</label> <select name="table" id="table">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
 						</select>
 					</div>
 				</div>

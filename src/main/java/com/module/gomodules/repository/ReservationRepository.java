@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationVO, Long> {
+
     @Query("SELECT COUNT(*) FROM RESERVATION WHERE start_time = ?1 AND table_number = ?2 AND isdeleted = 0")
     public int numberOfReservationBytimeAndtid(String start_time, int table_number);
 
@@ -22,12 +23,10 @@ public interface ReservationRepository extends JpaRepository<ReservationVO, Long
     public int numberOfReservationByTime(String t1, String t2);
 
 
-    @Query("SELECT a FROM RESERVATION a WHERE a.start_time = ?1 AND a.table_number = ?2 AND a.rank > ?3 ORDER BY a.rank asc")//확인필요
-    public List<ReservationVO> findAllReservationBytimeAndtidAndRank(String start_time, int table_number, int rank);
+//    @Query("SELECT a FROM RESERVATION a WHERE a.start_time = ?1 AND a.table_number = ?2 AND a.rank > ?3 ORDER BY a.rank asc")//확인필요
+//    public List<ReservationVO> findAllReservationBytimeAndtidAndRank(String start_time, int table_number, int rank);
 
-    @Query("SELECT a FROM RESERVATION a WHERE a.uid = ?1 AND a.isdeleted = 0" )
-    public List<ReservationVO> findAllByuidForUser(int table_number);
-
+/*
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("UPDATE RESERVATION SET rank = rank - 1 WHERE oid = ?1" )
@@ -53,7 +52,7 @@ public interface ReservationRepository extends JpaRepository<ReservationVO, Long
     @Query("UPDATE RESERVATION SET covers = ?1, start_time = ?2, table_number = ?3, wait = ?4, rank = ?5  WHERE oid = ?6" )
     public void updateReservationValues(int people_num, String start_time, int table_number, int wait, int rank ,int oid);
 
-
+*/
     public List<ReservationVO> findAllByuid(int uid);
 
     public ReservationVO findByOid(int oid);
@@ -61,7 +60,7 @@ public interface ReservationRepository extends JpaRepository<ReservationVO, Long
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM RESERVATION WHERE oid=?1")
+    @Query("DELETE FROM RESERVATION WHERE oid=?1")  //예약삭제
     public void deleteReservationbyoid(int oid);
 
     @Query("SELECT COUNT(*) FROM RESERVATION WHERE uid=?1")

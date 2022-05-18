@@ -10,19 +10,13 @@ import javax.persistence.Id;
 public class ReservationVO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int oid;
-    private int uid;
-    private int covers;//식사 인원수
-    private String name;
-    private String start_time;
-    private String date;
-    private int table_number;
-    private int rank;
-
-    private int wait;
-    private int isdeleted;
-
-    public void setVal_wait(int val) {this.wait=val;}
+    private int oid;    //기본키
+    private int uid;    //유저의 기본키
+    private String name;    //유저 이름
+    private int covers; //식사 인원수
+    private String date;        //예약 날짜
+    private String start_time;  //예약 시간
+    private int table_number;   //테이블 번호
 
     public void setVal_oid(int val) {
         this.oid = val;
@@ -39,12 +33,6 @@ public class ReservationVO {
     public void setVal_table_number(int val) {
         this.table_number = val;
     }
-    public void setVal_rank (int val) {
-        this.rank = val;
-    }
-    public void setVal_isdeleted (int val) {
-        this.isdeleted = val;
-    }
 
     public int getVal_oid() {
         return this.oid;
@@ -60,11 +48,5 @@ public class ReservationVO {
     }
     public int getVal_table_number() {
         return this.table_number;
-    }
-    public int getVal_rank() {
-        return this.rank;
-    }
-    public int getVal_isdeleted() {
-        return this.isdeleted;
     }
 }

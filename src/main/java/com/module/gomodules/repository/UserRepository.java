@@ -13,6 +13,10 @@ import javax.transaction.Transactional;
 public interface UserRepository extends JpaRepository<CustomerVO, Long> {
     public CustomerVO findById(String username);
 
+    /*
+    @Query("select EXISTS (select id from USER a where a.id limit 1) as success")
+    public CustomerVO findById(String id);
+*/
     @Query("SELECT a FROM USER a WHERE a.oid = ?1")
     public CustomerVO findByUid(int id);
 

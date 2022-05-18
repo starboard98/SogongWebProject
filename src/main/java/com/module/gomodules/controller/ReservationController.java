@@ -19,11 +19,12 @@ import com.module.gomodules.VO.modifyingReservation;
 //import com.module.gomodules.service.EventService;
 import com.module.gomodules.repository.ReservationRepository;
 import com.module.gomodules.service.ReservationService;
-import com.module.gomodules.service.TableService;
+//import com.module.gomodules.service.TableService;
 import com.module.gomodules.repository.UserRepository;
 
 @Controller
 public class ReservationController {
+    /*
     @Autowired
     ReservationService ReservationService;
 //    @Autowired
@@ -39,7 +40,7 @@ public class ReservationController {
         int cancleoid = Integer.parseInt(request.getParameter("cancleoid"));
         ReservationVO vo = ReservationService.findByOid(cancleoid); //취소할 예약의 vo
         ReservationService.removeReservationForUser(vo);
-        return "<script> alert('취소 완료');  location.href= '/showUserReservation'; </script>";
+        return "<script> alert('삭제 완료');  location.href= '/listReservation'; </script>";
     }
 
     @RequestMapping(value = "/callDeleteReserve/{oid}", produces = "text/html; charset=UTF-8")
@@ -132,10 +133,10 @@ public class ReservationController {
             }
 
             int i = ReservationService.findWaitRank(input_datetime, new_table_number);// 동일날짜 동시간대에 있는 예약의 개수 리턴
-            if (i != 0)/* 이미 해당시간에 예약이 존재한다면 */ {
+            if (i != 0) {
                 new_wait = 1;// 예약이 존재한다.
                 new_rank = i;// 대기순서는 i
-            } else/* 해당시간에 예약이 없다면 */ {
+            } else {
                 new_wait = 0;
                 new_rank = 0;
             }
@@ -159,4 +160,6 @@ public class ReservationController {
         model.addAttribute("userid", session.getAttribute("id"));
         return "<script> alert('수정 완료');  location.href= '/showUserReservation'; </script>";
     }
+
+     */
 }
