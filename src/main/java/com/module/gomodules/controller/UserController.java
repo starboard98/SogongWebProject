@@ -39,23 +39,17 @@ public class UserController {
         }
         String password = req.getParameter("password");
         String encoded_password = passwordEncoder.encode(password);
-        // 암호화안함
-        // vo.setVal_password(password);
-        // 암호화함
+        // vo.setVal_password(password); //not_crypto
         vo.setVal_password(encoded_password);
         vo.setVal_name(req.getParameter("name"));
         vo.setVal_phonenumber(req.getParameter("phone"));
         System.out.print(vo.getVal_password());
-        if (vo.getVal_id().equals("") || vo.getVal_name().equals("") || vo.getVal_password().equals("")
+        if (vo.getVal_id().equals("") || vo.getVal_name().equals("") || password.equals("")
                 || vo.getVal_phonenumber().equals(""))
             return "<script> alert('정보를 모두 입력해주세요.');  location.href= '/signin.html'; </script>";
 
-//        if (!req.getParameter("re-password").contentEquals(req.getParameter("password")))
-//            return "<script> alert('두 비밀번호가 다릅니다');  location.href= '/signIn.html'; </script>";
-
-        /* 끝 */
         userService.joinUser(vo);
-        return "<script> alert('가입 되셨습니다!'); location.href= '/index.html'; </script>";
+        return "<script> alert('가입 되었습니다.'); location.href= '/index.html'; </script>";
     }
 
     @RequestMapping(value = "/join")
@@ -84,44 +78,34 @@ public class UserController {
 
     // login
 
+    //로그인 : 로그인시 세션부여
     @ResponseBody // return to body
     @PostMapping(value = "/signIn.do", produces = "text/html; charset=UTF-8")
     public String signIn(HttpSession session, HttpServletRequest req) {
         String id = req.getParameter("id");
         String pw = req.getParameter("password");
-
-        /*
-         * if (id.equals("")) { return
-         * "<script> alert('아이디를 입력해주세요.');  location.href= '/index'; </script>"; } if
-         * (pw.equals("")) { return
-         * "<script> alert('비밀번호를 입력하세요');  location.href= '/index'; </script>"; }
-         */
-
+        if(id.equals("")) {
+            return "<script> alert('아이디를 입력해주세요.');  location.href= '/index.html' ; </script>";
+        }
+        if(pw.equals("")) {
+            return "<script> alert('비밀번호를 입력하세요');  location.href= '/index.html'; </script>";
+        }
         if (userRepository.findById(id) == null) {
             return "<script> alert('없는 아이디 입니다.');  location.href= '/index.html'; </script>";
-            // return "index";
         }
 
         if (userService.loginCheck(id, pw)) {
             System.out.println("\n" + id + "님 login");
-
             // 유저의 oid도 세션에 함께 저장한다. (DB연동관련)
+            // 세션은 oid, logincheck, id가 저장된다.
             CustomerVO vo = userRepository.findById(id);
             int oid = vo.getVal_oid();
+            String name = vo.getVal_name();
             session.setAttribute("oid", oid);
-            // 코드끝
-            // 유저의 level도 세션에 함께 저장하는게 좋아보임
-            //int level = vo.getVal_level();
-            //session.setAttribute("level", level);
-            // 코드끝
-
             session.setAttribute("loginCheck", true);
             session.setAttribute("id", id);
-           //session.setAttribute("level", vo.getVal_level());
-
-            // if (vo.getVal_level() == 0)
-            return "<script> alert('로그인 되셨습니다!'); location.href= '/home.html'; </script>";
-//            return "<script>location.href= '/index'; </script>";
+            session.setAttribute("name", name);
+            return "<script> alert('"+session.getAttribute("name")+"님 로그인 되셨습니다!'); location.href= '/home.html'; </script>";
         } else {
             System.out.println("False");
             return "<script> alert('아이디와 비밀번호가 일치하지 않습니다.');  location.href= '/index.html'; </script>";
@@ -130,58 +114,50 @@ public class UserController {
     }
 
     // logout
+    @ResponseBody
     @RequestMapping(value = "/logOut.do")
     public String logOut(HttpSession session) {
+        session.setAttribute("oid", null);
         session.setAttribute("loginCheck", null);
         session.setAttribute("id", null);
-        session.setAttribute("level", null);
-        return "/index";
+        session.setAttribute("name",null);
+        return "<script> alert('로그아웃 되었습니다..');location.href='/index.html'; </script>";
     }
 
     // page mapping
-    @RequestMapping(value = "/home", produces = "text/html; charset=UTF-8")
+    // home에는 리다이렉션이 잘이루어짐, .html에는 x
+    @ResponseBody
+    @RequestMapping(value = "/home")
     public String home(HttpSession session, Model model) {
         if (session.getAttribute("loginCheck") == null)
-            return "index";
-        /*
-         * 오류수정 2222 : 모든 home으로 넘어가는 부분에서 문제가 발생해 처음 세션에 level도 저장하게 개선함 //오류수정 : 뷰에
-         * level을 넘겨주지 않는 오류가 있었음 String cur_id = (String) session.getAttribute("id");
-         * CustomerVO vo = userRepository.findById(cur_id);
-         */
-        model.addAttribute("userid", session.getAttribute("id"));
-        model.addAttribute("level", session.getAttribute("level"));
-
-        return "home";
+            return "<script> alert('로그인 후 이용해주시길 바랍니다.');location.href='/index.html'; </script>";   //로그인이 x, 인덱스로 돌려보냄
+        //model에 userid속성을 추가하고 값은 id로 설정, 일단 보류
+        //model.addAttribute("userid", session.getAttribute("id"));
+        return "/home";
     }
 
+    /* 관리자 일단 보류
     @RequestMapping(value = "/adminhome")
     public String adminhome(HttpSession session, Model model) {
-        /* 관리자 레벨인지 확인 */
         if (session.getAttribute("loginCheck") == null || (int) session.getAttribute("level") == 0)
             return "index";
 
         model.addAttribute("userid", session.getAttribute("id"));
         return "adminhome";
-    }
+    }*/
 
     @RequestMapping(value = "/index")
-    public String index() {
-        return "index";
-    }
-
-    @RequestMapping(value = "/eventReservation")
-    public String eventReservation() {
-        return "eventReservation";
+    public String index(HttpSession session) {
+        session.setAttribute("oid", null);
+        session.setAttribute("loginCheck", null);
+        session.setAttribute("id", null);
+        session.setAttribute("name",null);
+        return "/index";
     }
 
     @RequestMapping(value = "/noEventReservation")
     public String noEventReservation() {
         return "noEventReservation";
-    }
-
-    @RequestMapping(value = "/showTableView")
-    public String showTableView() {
-        return "showTableView";
     }
 
 //    @RequestMapping(value = "/showUserReservation")
