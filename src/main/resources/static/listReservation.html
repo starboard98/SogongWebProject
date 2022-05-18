@@ -97,7 +97,10 @@
             }
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="js/lightbox.js">//////////// lightbox띠워주기 ///////////</script>
+        <script src="js/lightbox.js">
+            //////////// lightbox띠워주기 ///////////
+            getsize(3);
+        </script>
         <!-- 라이트박스 end -->
     </head>
     <body>
@@ -157,11 +160,12 @@
                          </thead>
                         <tbody>
                             <tr class="paper">
-                              <th scope="row">264</th>
-                              <td>김호준</td>
-                              <td>2020-05-05</td>
-                              <td>2</td>
+                              <th scope="row">{id}</th>
+                              <td>{name}</td>
+                              <td>{YY-MM-DD} {time}</td>
+                              <td>{인원}</td>
                             </tr>
+                      <!--
                             <tr class="paper">
                               <th scope="row">265</th>
                               <td>홍길동</td>
@@ -174,6 +178,7 @@
                               <td>2020-05-06</td>
                               <td>4</td>
                             </tr>
+                        -->
                         </tbody>
                       </table>
                         <!-- 라이트박스 -->
@@ -189,11 +194,21 @@
                                 </div>
                               </div>
                               <hr class="lightbox-splitter" />
-                              <img alt="#" class="#" src="assets/img/table_ex1.jpg" />
+                                <div>
+                                <script>
+                                    for(let i=0; i<12; i++) {
+                                        let pop = 3;    //pop은 테이블에 앉을 수 있는 인원 수 2인 또는 4인 또는 6인
+                                        document.write("<div id=\'st"+ i +"\' style=\'margin: 30px; border: 3px solid #fcc6f7; width:"+ 50*pop +"px; height:100px; display: inline-block; text-align: center; line-height: 100px;\'>"+i+"번</div>")
+                                    }
+                                    // 전체 좌석 수 만큼 반복, 4번좌석을 선택했다는 의미, 대신에, 유저가 예약한 좌석번호를 db에서 받아와 넣으시면 됩니다.
+                                    let a = "st" + 4; // "st" + {$예약좌석}
+                                    document.getElementById(a).style.backgroundColor = "#caa6fe";
+                                </script>
+                                </div>
                             <br>
                               <h5>김호준님의 예약정보입니다.</h5>
                               <h6>2022-05-05</h6>
-                              <h6>19:00 ~ 20:30</h6><h6>5번 테이블</h6>
+                              <h6>19:00 ~ 20:30</h6><h6>4번 테이블</h6>
                                 <div style="float: right">
                                     <a class="btn-a hover1" href="modifyReservation.html?id=1">예약수정</a>&nbsp;
                                     <a class="btn-a hover1" onclick="showConfirm()">예약취소</a>
@@ -220,7 +235,7 @@
                                 </div>
                             </div>
                         </div>
-
+                          <!--
                         <div id="darken-background">
                             <div id="lightbox">
                               <div class="user-information">
@@ -236,10 +251,10 @@
                               <h6>[시간 ~ 시간+a]</h6><h6>[테이블번호]번 테이블</h6>
                             </div>
                         </div>
-
+라이트박스 END-->
+                          <!--예약 END-->
                       </div>
-                      <!-- 라이트박스 END-->
-                        <!--예약 END-->
+
 
                     </div>
                 </div>
