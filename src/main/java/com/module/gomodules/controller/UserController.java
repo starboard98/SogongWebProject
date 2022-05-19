@@ -148,7 +148,7 @@ public class UserController {
 
     @RequestMapping(value = "/noEventReservation")
     public String noEventReservation() {
-        return "noEventReservation";
+        return "/noEventReservation";
     }
 
     @RequestMapping(value = "/listReservation")
@@ -234,7 +234,7 @@ public class UserController {
         int a = Integer.parseInt(request.getParameter("table_num"));
         vo.setVal_table_number(a);
 
-        //ReservationService.addReservation(vo);
+        ReservationService.addReservation(vo);
         return "<script> alert('예약완료 되었습니다.'); location.href='/listReservation'; </script>";
     }
 }
