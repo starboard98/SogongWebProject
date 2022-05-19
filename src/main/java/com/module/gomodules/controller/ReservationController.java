@@ -77,8 +77,53 @@ public class ReservationController {
         r[1] = vo.getVal_date();
         r[2] = vo.getVal_start_time();
         r[3] = String.valueOf(vo.getVal_table_number());
+        model.addAttribute("old_reservation", r);
+        model.addAttribute("reservation_id", oid);
+        return "/modifyReservation";
+    }
 
-        model.addAttribute("userid", session.getAttribute("id"));
-        return "redirect:/listReservation";
+
+    @RequestMapping(value = "/modifyre/{oid}", produces = "text/html; charset=UTF-8")
+    public String modifyre(@PathVariable int oid, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(true);// 현재 세션 로드
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        if (session.getAttribute("loginCheck") == null) {//세션아이디가 존재하지않는다면 index페이지로 보냄
+            out.println("<script>alert('로그인 후 이용하세요.'); location.href= '/index'; </script>");
+            out.flush();
+            return "redirect:/index";
+        }
+
+        //vo.setVal_uid((int) session.getAttribute("oid"));// 세션의 oid(유저기본키)값을 uid(예약.고객아이디)로
+        //vo.setVal_name((String) session.getAttribute("name"));// 이름가져오기
+
+        //form태그 값 받아오기
+        int covers = Integer.parseInt(request.getParameter("num_people"));//인원수
+        String date = request.getParameter("date");// 날짜 가져오기
+        String time = request.getParameter("start_time");// 시간 가져오기
+        //vo.setVal_date(date);
+        //vo.setVal_start_time(time);// 날짜+시간 가져오기
+        int a = Integer.parseInt(request.getParameter("table_num"));
+        //vo.setVal_table_number(a);
+
+        //본인에 대한 중복인지 미리 검사
+        if(ReservationService.isSelf(date,  time, a, oid) > 0){
+            out.println("<script>alert('정상적으로 수정되었습니다.'); location.href= '/listReservation';  </script>");
+            out.flush();
+            return "redirect:/listReservation";
+        }
+        //중복 예약 검사
+        else if(ReservationService.findByEquals(date, time, a) > 0 ){
+            out.println("<script>alert('해당 테이블은 이미 예약이 있습니다.'); location.href= '/modifyReservation/"+oid+"';  </script>");
+            out.flush();
+            return "redirect:/modifyReservation";
+        }
+        else{
+            //cover, date, time, table, oid
+            ReservationService.updateReservation(covers, date, time, a, oid);
+            out.println("<script>alert('정상적으로 수정되었습니다.'); location.href= '/listReservation';  </script>");
+            out.flush();
+            return "redirect:/listReservation";
+        }
     }
 }
