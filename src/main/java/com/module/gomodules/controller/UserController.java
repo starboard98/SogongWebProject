@@ -63,31 +63,16 @@ public class UserController {
         return "failed";
     }
 
-//    @ResponseBody // return to body
-//    @RequestMapping(value = "/idCheck.do", method = RequestMethod.GET)
-//    public String idCheck(HttpServletRequest req, CustomerVO vo) {
-//        vo.setVal_id(req.getParameter("user_id"));
-//        System.out.print(vo.getVal_id());
-//        if (userRepository.findById(vo.getVal_id()) != null) {
-//            System.out.println("중복아이디 감지");
-//            return "<script> alert('중복된 아이디 입니다.');  location.href= '/signIn.html'; </script>";
-//        }
-//        else
-//            return "<script> location.href= '/signIn.html'; </script>";
-//    }
-
-    // login
-
     //로그인 : 로그인시 세션부여
     @ResponseBody // return to body
     @PostMapping(value = "/signIn.do", produces = "text/html; charset=UTF-8")
     public String signIn(HttpSession session, HttpServletRequest req) {
         String id = req.getParameter("id");
         String pw = req.getParameter("password");
-        if(id.equals("")) {
+        if (id.equals("")) {
             return "<script> alert('아이디를 입력해주세요.');  location.href= '/index.html' ; </script>";
         }
-        if(pw.equals("")) {
+        if (pw.equals("")) {
             return "<script> alert('비밀번호를 입력하세요');  location.href= '/index.html'; </script>";
         }
         if (userRepository.findById(id) == null) {
@@ -105,7 +90,7 @@ public class UserController {
             session.setAttribute("loginCheck", true);
             session.setAttribute("id", id);
             session.setAttribute("name", name);
-            return "<script> alert('"+session.getAttribute("name")+"님 로그인 되셨습니다!'); location.href= '/home.html'; </script>";
+            return "<script> alert('" + session.getAttribute("name") + "님 로그인 되셨습니다!'); location.href= '/home.html'; </script>";
         } else {
             System.out.println("False");
             return "<script> alert('아이디와 비밀번호가 일치하지 않습니다.');  location.href= '/index.html'; </script>";
@@ -117,15 +102,16 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/logOut.do")
     public String logOut(HttpSession session) {
+        String name = (String) session.getAttribute("name");
         session.setAttribute("oid", null);
         session.setAttribute("loginCheck", null);
         session.setAttribute("id", null);
-        session.setAttribute("name",null);
-        return "<script> alert('로그아웃 되었습니다..');location.href='/index.html'; </script>";
+        session.setAttribute("name", null);
+        return "<script> alert('" + name + "님 로그아웃 되었습니다.');location.href='/index.html'; </script>";
     }
 
     // page mapping
-    // home에는 리다이렉션이 잘이루어짐, .html에는 x
+    // home.html 에는 리다이렉션이 잘이루어짐 접근제한기능추가.
     @ResponseBody
     @RequestMapping(value = "/home")
     public String home(HttpSession session, Model model) {
@@ -151,7 +137,7 @@ public class UserController {
         session.setAttribute("oid", null);
         session.setAttribute("loginCheck", null);
         session.setAttribute("id", null);
-        session.setAttribute("name",null);
+        session.setAttribute("name", null);
         return "/index";
     }
 
@@ -211,46 +197,25 @@ public class UserController {
     @RequestMapping(value = "/addReservation")
     public String addReservation(HttpServletRequest request, ReservationVO vo, Model model) {
         HttpSession session = request.getSession(true);// 현재 세션 로드
-        if (session.getAttribute("id") == null) //세션아이디가 존재하지않는다면 index페이지로 보냄
+        if (session.getAttribute("loginCheck") == null) //세션아이디가 존재하지않는다면 index페이지로 보냄
             return "/index";
-        vo.setVal_uid((int) session.getAttribute("oid"));// 세션의 oid값 가져오기
 
-        vo.setVal_covers(Integer.parseInt(request.getParameter("num_people")));// 인원수 가져오기
+        vo.setVal_uid((int) session.getAttribute("oid"));// 세션의 oid(유저기본키)값을 uid(예약.고객아이디)로
+        vo.setVal_name((String) session.getAttribute("name"));// 이름가져오기
 
+        //form태그 값 받아오기
+        vo.setVal_covers(Integer.parseInt(request.getParameter("num_people")));//인원수
         String date = request.getParameter("date");// 날짜 가져오기
-        String time = request.getParameter("time");// 시간 가져오기
-        String datetime = date + " " + time;
-        vo.setVal_start_time(datetime);// 날짜 + 시간 가져오기
-        //vo.setVal_table_number(table_number);
+        String time = request.getParameter("start_time");// 시간 가져오기
+        vo.setVal_date(date);
+        vo.setVal_start_time(time);// 날짜+시간 가져오기
+        int a = Integer.parseInt(request.getParameter("table_num"));
+        vo.setVal_table_number(a);
 
         ReservationService.addReservation(vo);
-
-        //model.addAttribute("userid", session.getAttribute("id"));
-        //model.addAttribute("level", session.getAttribute("level"));
         return "/listReservation";
-        /*
-        // 자동배정의 tid 구하기
-        int table_number = 1;
-        int mintablewait = 9999;
-        int numOftable = TableService.numberofTable(); // 테이블의개수
-        for (int j = 1; j <= numOftable; j++) {
-            int i = ReservationService.findWaitRank(datetime, j);
-            if (i < mintablewait) {
-                mintablewait = i;
-                table_number = j;
-            }
-        }
-
-        int i = ReservationService.findWaitRank(datetime, table_number);// 동일날짜 동시간대에 있는 예약의 개수 리턴
-        if (i != 0){//이미 해당시간에 예약이 존재한다면
-        vo.setVal_wait(1);// 예약이 존재한다.
-            vo.setVal_rank(i);// 대기순서는 i
-        } else{
-            vo.setVal_wait(0);
-            vo.setVal_rank(0);
-        }
-*/
     }
+}
 //
 //    @Autowired
 //    EventService EventService;
@@ -306,5 +271,3 @@ public class UserController {
 //        model.addAttribute("level", session.getAttribute("level"));
 //        return "home";
 //    }
-
-}
