@@ -18,10 +18,6 @@ public class ReservationService {
         System.out.println("예약 추가 성공");
     }
 
-    public int findWaitRank(String time, int tableid) {
-        return Repository.numberOfReservationBytimeAndtid(time, tableid);
-    }
-
     public int findByTableId(int uid) {
         return Repository.numberOfReservationByTableId(uid);
     }

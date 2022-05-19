@@ -53,6 +53,7 @@ public interface ReservationRepository extends JpaRepository<ReservationVO, Long
     public void updateReservationValues(int people_num, String start_time, int table_number, int wait, int rank ,int oid);
 
 */
+    //유저아이디로 예약목록 찾기
     public List<ReservationVO> findAllByuid(int uid);
 
     public ReservationVO findByOid(int oid);
