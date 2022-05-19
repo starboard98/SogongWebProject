@@ -67,4 +67,6 @@ public interface ReservationRepository extends JpaRepository<ReservationVO, Long
     @Query("SELECT COUNT(*) FROM RESERVATION WHERE uid=?1")
     public int countReservationByUser(int oid);
 
+    @Query("SELECT COUNT(*) FROM RESERVATION WHERE date=?1 and start_time=?2 and table_number=?3")
+    public int numberOfReservationEquals(String date, String start_time, int table_number);
 }

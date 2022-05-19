@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.module.gomodules.VO.CustomerVO;
 import com.module.gomodules.VO.ReservationVO;
+import com.module.gomodules.repository.ReservationRepository;
 import com.module.gomodules.repository.UserRepository;
 import com.module.gomodules.service.ReservationService;
 //import com.module.gomodules.service.TableService;
@@ -36,6 +37,10 @@ public class UserController {
 
     @Autowired
     ReservationService ReservationService;
+
+    @Autowired
+    ReservationRepository reservationRepository;
+
 
     @ResponseBody // return to body
     @RequestMapping(value = "/joinUs.do", method = RequestMethod.POST)
@@ -130,21 +135,9 @@ public class UserController {
             out.println("<script>alert('로그인 후 이용하세요.'); location.href= '/index'; </script>");
             out.flush();
             return "redirect:/index";
-        }   //로그인이 x, 인덱스로 돌려보냄
-        //model에 userid속성을 추가하고 값은 id로 설정, 일단 보류
-        //model.addAttribute("userid", session.getAttribute("id"));
+        }
         return "/home";
     }
-
-    /* 관리자 일단 보류
-    @RequestMapping(value = "/adminhome")
-    public String adminhome(HttpSession session, Model model) {
-        if (session.getAttribute("loginCheck") == null || (int) session.getAttribute("level") == 0)
-            return "index";
-
-        model.addAttribute("userid", session.getAttribute("id"));
-        return "adminhome";
-    }*/
 
     @RequestMapping(value = "/index")
     public String index(HttpSession session) {
@@ -161,7 +154,7 @@ public class UserController {
         if (session.getAttribute("loginCheck") == null) {//세션아이디가 존재하지않는다면 index페이지로 보냄
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('로그인 후 이용하세요.');</script>");
+            out.println("<script>alert('로그인 후 이용하세요.'); location.href= '/index';</script>");
             out.flush();
             return "redirect:/index";
         }
@@ -176,7 +169,7 @@ public class UserController {
         if (session.getAttribute("loginCheck") == null) {//세션아이디가 존재하지않는다면 index페이지로 보냄
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('로그인 후 이용하세요.');</script>");
+            out.println("<script>alert('로그인 후 이용하세요.'); location.href= '/index';</script>");
             out.flush();
             return "redirect:/index";
         }
@@ -201,10 +194,10 @@ public class UserController {
     @RequestMapping(value = "/addReservation")
     public String addReservation(HttpServletRequest request, ReservationVO vo, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(true);// 현재 세션 로드
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
         if (session.getAttribute("loginCheck") == null) {//세션아이디가 존재하지않는다면 index페이지로 보냄
-            response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>alert('로그인 후 이용하세요.');</script>");
+            out.println("<script>alert('로그인 후 이용하세요.'); location.href= '/index'; </script>");
             out.flush();
             return "redirect:/index";
         }
@@ -220,6 +213,16 @@ public class UserController {
         vo.setVal_start_time(time);// 날짜+시간 가져오기
         int a = Integer.parseInt(request.getParameter("table_num"));
         vo.setVal_table_number(a);
+
+        //List<ReservationVO> list = ReservationService.getReservationList((Integer) session.getAttribute("oid"));
+        //ReservationService.getReservationList();
+
+        //중복 예약 검사
+        if(ReservationService.findByEquals(date, time, a) > 0 ){
+            out.println("<script>alert('해당 테이블은 이미 예약이 있습니다.'); location.href= '/noEventReservation';  </script>");
+            out.flush();
+            return "redirect:/noEventReservation";
+        }
 
         ReservationService.addReservation(vo);
         return "redirect:/listReservation";

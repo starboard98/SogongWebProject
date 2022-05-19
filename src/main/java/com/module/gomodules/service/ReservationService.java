@@ -18,9 +18,10 @@ public class ReservationService {
         System.out.println("예약 추가 성공");
     }
 
-    public int findByTableId(int uid) {
-        return Repository.numberOfReservationByTableId(uid);
+    public int findByEquals(String date, String start_time, int table_number) {
+        return Repository.numberOfReservationEquals(date, start_time, table_number);
     }
+
 
     public List<ReservationVO> getReservationListAll() {
         //Sort sort = Sort.by(Sort.Direction.DESC, "oid");
