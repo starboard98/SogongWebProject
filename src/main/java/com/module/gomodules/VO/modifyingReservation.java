@@ -4,7 +4,6 @@ public class modifyingReservation {
     public int oid;
     public int people_number;
     public String start_time;
-    public int rank;
     public int tid;
     public void setVal_oid(int oid) {
         this.oid = oid;
@@ -15,10 +14,5 @@ public class modifyingReservation {
         public void setVal_start_time(String start_time){
         this.start_time=start_time;
         }
-        public void setVal_rank(int rank){
-        this.rank=rank;
-        }public void setVal_tid(int tid){
-        this.tid=tid;
-    }
 }
 

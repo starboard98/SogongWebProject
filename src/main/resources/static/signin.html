@@ -19,14 +19,14 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="login.html">Semicolon</a>
+                <a class="navbar-brand" href="index.html">Semicolon</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="login.html" style="font-size: 15px">홈</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html" style="font-size: 15px">홈</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="signin.html" style="font-size: 15px">회원가입</a></li>
                     </ul>
                 </div>
@@ -59,9 +59,9 @@
                             <!-- To make this form functional, sign up at-->
                             <!-- https://startbootstrap.com/solution/contact-forms-->
                             <!-- to get an API token!-->
-                            <form id="signinForm" action="" data-sb-form-api-token="API_TOKEN" autocomplete="off">
+                            <form id="signinForm" action="/joinUs.do" method="post" data-sb-form-api-token="API_TOKEN" autocomplete="off">
                                 <div class="form-floating">
-                                    <input class="form-control" id="id" type="text" placeholder=" " />
+                                    <input class="form-control" id= "id" name="id" type="text" placeholder=" " />
                                     <label for="id">ID</label>
                                     <br />
                                     <button class="btn btn-primary text-uppercase" id="idCheckButton" type="submit" style="height: 30pt;width: 90px;padding: 12px 0;font-size: 12px;float: right" onclick="idCheck()">ID Check</button>
@@ -69,16 +69,16 @@
                                 <br />
                                 <br />
                                     <div class="form-floating">
-                                        <input class="form-control" id="password" type="password" minlength="6" maxlength="15" placeholder=" " data-sb-validations="required" />
+                                        <input class="form-control" id="password" name="password" type="password" minlength="6" maxlength="15" placeholder=" " data-sb-validations="required" />
                                         <label for="password">비밀번호</label>
                                     </div>
                                 <div class="form-floating">
-                                    <input class="form-control" id="name" type="text" placeholder=" " data-sb-validations="required" />
+                                    <input class="form-control" id="name" name="name" type="text" placeholder=" " data-sb-validations="required" />
                                     <label for="name">이름</label>
                                     <div class="invalid-feedback" data-sb-feedback="name:required">필수 입력사항입니다.</div>
                                 </div>
                                 <div class="form-floating">
-                                    <input class="form-control" id="phone" type="tel" placeholder=" " data-sb-validations="required" />
+                                    <input class="form-control" id="phone" name="phone" type="tel" placeholder=" " data-sb-validations="required" />
                                     <label for="phone">전화번호</label>
                                     <div class="invalid-feedback" data-sb-feedback="phone:required">필수 입력사항입니다.</div>
                                 </div>
