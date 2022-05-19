@@ -34,6 +34,9 @@ public class ReservationVO {
         this.table_number = val;
     }
 
+    public void setVal_name(String val){this.name = val;}
+    public void setVal_date(String val){this.date = val;}
+
     public int getVal_oid() {
         return this.oid;
     }
@@ -49,4 +52,6 @@ public class ReservationVO {
     public int getVal_table_number() {
         return this.table_number;
     }
+    public String getVal_name(){return this.name;}
+    public String getVal_date(){return this.date;}
 }

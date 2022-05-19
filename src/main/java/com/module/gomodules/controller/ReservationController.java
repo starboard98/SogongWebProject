@@ -24,16 +24,13 @@ import com.module.gomodules.repository.UserRepository;
 
 @Controller
 public class ReservationController {
-    /*
     @Autowired
     ReservationService ReservationService;
-//    @Autowired
-//    EventService EventService;
     @Autowired
-    TableService TableService;
+    ReservationRepository ReservationRepository;
     @Autowired
     UserRepository userRepository;
-
+/* 예약 삭제 기능, 하나는 관리자페이지 하나는 유저가 삭제
     @ResponseBody
     @RequestMapping(value = "/cancleReservation.do")
     public String cancleReservation(HttpServletRequest request, Model model) {
@@ -49,10 +46,8 @@ public class ReservationController {
         ReservationService.removeReservationForUser(vo);
         return "redirect:/showUserReservation";
     }
-
-    @Autowired
-    ReservationRepository ReservationRepository;
-
+ */
+/*
     @RequestMapping(value = "/callModifyReserve")
     public String modifyReserve(HttpSession session,Model model,ServletRequest req) {
 
@@ -161,5 +156,8 @@ public class ReservationController {
         return "<script> alert('수정 완료');  location.href= '/showUserReservation'; </script>";
     }
 
-     */
+  */
+
+
+
 }
