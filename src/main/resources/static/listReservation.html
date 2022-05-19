@@ -113,7 +113,7 @@
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                       <!--  상단 메뉴 바  -->
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/index">로그아웃</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/listReservation">예약조회</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href=/listReservation>예약조회</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/noEventReservation">좌석예약</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="menu.html">메뉴 판</a></li>
                     </ul>
@@ -210,8 +210,8 @@
                                 document.write("<h6>"+l[k][2]+"</h6>");
                                 document.write("<h6>"+l[k][3]+"시</h6><h6>"+l[k][4]+"번 테이블("+l[k][1]+"명)</h6>");
                                 document.write("<div style=\"float: right\">");
-                                document.write("<a class=\"btn-a hover1\" href=\"modifyReservation.html?id="+k+">예약수정</a>&nbsp;");
-                                document.write("<a class=\"btn-a hover1\" onclick=\"showConfirm()\">예약취소</a>");
+                                document.write("<a class=\"btn-a hover1\" href=\"modifyReservation/"+l[k][5]+"\">예약수정</a>&nbsp;");
+                                document.write("<a class=\"btn-a hover1\" href=\"callDeleteReserve/"+l[k][5]+"\">예약취소</a>");
                                 document.write("</div></div></div>");
                             }
                         </script>

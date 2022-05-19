@@ -1,6 +1,7 @@
 package com.module.gomodules.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.module.gomodules.VO.CustomerVO;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @Controller
@@ -56,7 +60,7 @@ public class UserController {
         userService.joinUser(vo);
         return "<script> alert('가입 되었습니다.'); location.href= '/index.html'; </script>";
     }
-
+/*
     @RequestMapping(value = "/join")
     public String join() {
         return "join";
@@ -67,7 +71,7 @@ public class UserController {
         System.out.print("nooo..");
         return "failed";
     }
-
+*/
     //로그인 : 로그인시 세션부여
     @ResponseBody // return to body
     @PostMapping(value = "/signIn.do", produces = "text/html; charset=UTF-8")
@@ -95,7 +99,7 @@ public class UserController {
             session.setAttribute("loginCheck", true);
             session.setAttribute("id", id);
             session.setAttribute("name", name);
-            return "<script> alert('" + session.getAttribute("name") + "님 로그인 되셨습니다!'); location.href= '/home.html'; </script>";
+            return "<script> alert('" + session.getAttribute("name") + "님 로그인 되셨습니다!'); location.href= '/home'; </script>";
         } else {
             System.out.println("False");
             return "<script> alert('아이디와 비밀번호가 일치하지 않습니다.');  location.href= '/index.html'; </script>";
@@ -105,23 +109,28 @@ public class UserController {
 
     // logout
     @ResponseBody
-    @RequestMapping(value = "/logOut.do")
+    @RequestMapping(value = "/logOut")
     public String logOut(HttpSession session) {
         String name = (String) session.getAttribute("name");
         session.setAttribute("oid", null);
         session.setAttribute("loginCheck", null);
         session.setAttribute("id", null);
         session.setAttribute("name", null);
-        return "<script> alert('" + name + "님 로그아웃 되었습니다.');location.href='/index.html'; </script>";
+        return "<script> alert('" + name + "님 로그아웃 되었습니다.');location.href='/index'; </script>";
     }
 
     // page mapping
     // home.html 에는 리다이렉션이 잘이루어짐 접근제한기능추가.
-    @ResponseBody
+
     @RequestMapping(value = "/home")
-    public String home(HttpSession session, Model model) {
-        if (session.getAttribute("loginCheck") == null)
-            return "<script> alert('로그인 후 이용해주시길 바랍니다.');location.href='/index.html'; </script>";   //로그인이 x, 인덱스로 돌려보냄
+    public String home(HttpSession session, HttpServletResponse response) throws IOException {
+        if (session.getAttribute("loginCheck") == null) {//세션아이디가 존재하지않는다면 index페이지로 보냄
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인 후 이용하세요.'); location.href= '/index'; </script>");
+            out.flush();
+            return "redirect:/index";
+        }   //로그인이 x, 인덱스로 돌려보냄
         //model에 userid속성을 추가하고 값은 id로 설정, 일단 보류
         //model.addAttribute("userid", session.getAttribute("id"));
         return "/home";
@@ -146,22 +155,35 @@ public class UserController {
         return "/index";
     }
 
+
     @RequestMapping(value = "/noEventReservation")
-    public String noEventReservation() {
+    public String noEventReservation(HttpSession session, HttpServletResponse response) throws IOException {
+        if (session.getAttribute("loginCheck") == null) {//세션아이디가 존재하지않는다면 index페이지로 보냄
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인 후 이용하세요.');</script>");
+            out.flush();
+            return "redirect:/index";
+        }
         return "/noEventReservation";
     }
 
+
     @RequestMapping(value = "/listReservation")
-    public String listReservation(HttpServletRequest request, Model model){
+    public String listReservation(HttpServletRequest request, Model model, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(true);// 현재 세션 로드
 
-        if (session.getAttribute("loginCheck") == null) //세션아이디가 존재하지않는다면 index페이지로 보냄
-            return "/index";
-
+        if (session.getAttribute("loginCheck") == null) {//세션아이디가 존재하지않는다면 index페이지로 보냄
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인 후 이용하세요.');</script>");
+            out.flush();
+            return "redirect:/index";
+        }
         List<ReservationVO> list = ReservationService.getReservationList((Integer) session.getAttribute("oid"));
         model.addAttribute("name", session.getAttribute("name"));
         model.addAttribute("length", list.size());
-        String[][] r = new String[list.size()][5];
+        String[][] r = new String[list.size()][6];
         for(int i=0; i<list.size(); i++){
             //name covers date start_time table_number
             r[i][0] = list.get(i).getVal_name();
@@ -169,58 +191,23 @@ public class UserController {
             r[i][2] = list.get(i).getVal_date();
             r[i][3] = list.get(i).getVal_start_time();
             r[i][4] = list.get(i).getVal_table_number()+"";
+            r[i][5] = list.get(i).getVal_oid()+"";
         }
         model.addAttribute("list", r);
         return "/listReservation";
     }
-/*
-    @RequestMapping(value = "/showUserReservation")
-    public String showUserReservation(HttpServletRequest request, Model model) { // 예약리스트 조회관련 코드 추가함 ㅁㅁ
-        HttpSession session = request.getSession(true);// 현재 세션 로드
-        int currentOid = (int) session.getAttribute("oid");
-        String currentid = (String) session.getAttribute("id");
-        List<ReservationVO> list = ReservationService.getReservationListForUser(currentOid);
-        ArrayList<modefiedReservation> list2 = new ArrayList<modefiedReservation>();
-        for (ReservationVO vo : list) {
-            int oid = vo.getVal_oid();
-            int people_number = vo.getVal_people_number();
-            int rank = vo.getVal_rank();
-            int tid = vo.getVal_tid();
-            String start_time = vo.getVal_start_time();
 
-            /// 날짜 형식 변환 코드부분 //////////////////////
-            SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd HH시");
 
-            Date date = null;
-                        try {
-                date = in.parse(start_time);
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            String result = out.format(date);
-            /// 날짜 형식 변환 끝 //////////////////////////
-
-            modefiedReservation mReserv = new modefiedReservation();
-            mReserv.setVal_oid(oid);
-            mReserv.setVal_people_number(people_number);
-            mReserv.setVal_start_time(start_time);
-            mReserv.setVal_start_time(result);
-            list2.add(mReserv);
-        }
-        model.addAttribute("list", list2);
-        model.addAttribute("userid", currentid);
-        return "showUserReservation";
-    }
-*/
-
-    @ResponseBody
     @RequestMapping(value = "/addReservation")
-    public String addReservation(HttpServletRequest request, ReservationVO vo, Model model) {
+    public String addReservation(HttpServletRequest request, ReservationVO vo, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(true);// 현재 세션 로드
-        if (session.getAttribute("loginCheck") == null) //세션아이디가 존재하지않는다면 index페이지로 보냄
-            return "/index";
+        if (session.getAttribute("loginCheck") == null) {//세션아이디가 존재하지않는다면 index페이지로 보냄
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인 후 이용하세요.');</script>");
+            out.flush();
+            return "redirect:/index";
+        }
 
         vo.setVal_uid((int) session.getAttribute("oid"));// 세션의 oid(유저기본키)값을 uid(예약.고객아이디)로
         vo.setVal_name((String) session.getAttribute("name"));// 이름가져오기
@@ -235,6 +222,6 @@ public class UserController {
         vo.setVal_table_number(a);
 
         ReservationService.addReservation(vo);
-        return "<script> alert('예약완료 되었습니다.'); location.href='/listReservation'; </script>";
+        return "redirect:/listReservation";
     }
 }
