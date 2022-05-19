@@ -46,12 +46,12 @@ public interface ReservationRepository extends JpaRepository<ReservationVO, Long
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("UPDATE RESERVATION SET covers = ?1 WHERE oid = ?2" )
-    public void updateReservationPeopleNumber(int people_num, int oid);
+    public void updateReservationPeopleNumber(int covers, int oid);
 
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("UPDATE RESERVATION SET covers = ?1, start_time = ?2, table_number = ?3, wait = ?4, rank = ?5  WHERE oid = ?6" )
-    public void updateReservationValues(int people_num, String start_time, int table_number, int wait, int rank ,int oid);
+    public void updateReservationValues(int covers, String start_time, int table_number, int wait, int rank ,int oid);
 
 
     public List<ReservationVO> findAllByuid(int uid);

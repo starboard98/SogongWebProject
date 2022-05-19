@@ -131,7 +131,7 @@
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="page-heading">
                             <h2>예약조회</h2>
-                            <span class="subheading">{$name}님의 예약목록입니다.</span>
+                            <span class="subheading" th:text="${userid} + '님의 예약목록입니다'"></span>
                         </div>
                     </div>
                 </div>
@@ -159,11 +159,11 @@
                            </tr>
                          </thead>
                         <tbody>
-                            <tr class="paper">
-                              <th scope="row">{id}</th>
-                              <td>{name}</td>
-                              <td>{YY-MM-DD} {time}</td>
-                              <td>{인원}</td>
+                            <tr class="paper" th:each="list : ${list}">
+                              <th scope="row" th:text="${list.oid}"></th>
+                              <td th:text="${list.table_number}"></td>
+                              <td th:text="${list.start_time}"></td>
+                              <td th:text="${list.covers}"></td>
                             </tr>
                       <!--
                             <tr class="paper">

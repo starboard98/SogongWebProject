@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.module.gomodules.VO.ReservationVO;
 //import com.module.gomodules.VO.modefiedEvent;
 import com.module.gomodules.VO.modifyingDateAndTime;
-import com.module.gomodules.VO.modifyingReservation;
 //import com.module.gomodules.service.EventService;
 import com.module.gomodules.repository.ReservationRepository;
 import com.module.gomodules.service.ReservationService;
@@ -39,14 +38,14 @@ public class ReservationController {
         int cancleoid = Integer.parseInt(request.getParameter("cancleoid"));
         ReservationVO vo = ReservationService.findByOid(cancleoid); //취소할 예약의 vo
         ReservationService.removeReservationForUser(vo);
-        return "<script> alert('취소 완료');  location.href= '/showUserReservation'; </script>";
+        return "<script> alert('취소 완료');  location.href= '/listReservation'; </script>";
     }
 
     @RequestMapping(value = "/callDeleteReserve/{oid}", produces = "text/html; charset=UTF-8")
     public String callDeleteReserve(@PathVariable int oid,HttpSession session) {
         ReservationVO vo = ReservationService.findByOid(oid);
         ReservationService.removeReservationForUser(vo);
-        return "redirect:/showUserReservation";
+        return "redirect:/listReservation";
     }
 
     @Autowired
@@ -56,7 +55,7 @@ public class ReservationController {
     public String modifyReserve(HttpSession session,Model model,ServletRequest req) {
 
         if(req.getParameter("oid").contentEquals("")) {
-            return "redirect:/showUserReservation";
+            return "redirect:/listReservation";
         }
         int oid=Integer.parseInt(req.getParameter("oid"));
         System.out.print("oid"+oid);
@@ -91,7 +90,7 @@ public class ReservationController {
 //        model.addAttribute("mEvent",mEvent);
         //mEvent.oid가 -1이면 이벤트예약이 존재하지 않음을 의미함
 
-        return "modifyReserve";
+        return "modifyReservation";
     }
 
 
@@ -157,6 +156,6 @@ public class ReservationController {
 
 
         model.addAttribute("userid", session.getAttribute("id"));
-        return "<script> alert('수정 완료');  location.href= '/showUserReservation'; </script>";
+        return "<script> alert('수정 완료');  location.href= '/listReservation'; </script>";
     }
 }

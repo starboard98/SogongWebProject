@@ -47,9 +47,9 @@ public class ReservationService {
     public void removeReservationForUser(ReservationVO vo) { //유저전용 예약 삭제기능 검증은 안됨
         int oid = vo.getVal_oid();
         String start_time = vo.getVal_start_time();
-        int tid =vo.getVal_table_number();
+        int table_number =vo.getVal_table_number();
         int rank = vo.getVal_rank();
-        List<ReservationVO> list = Repository.findAllReservationBytimeAndtidAndRank(start_time, tid, rank);
+        List<ReservationVO> list = Repository.findAllReservationBytimeAndtidAndRank(start_time, table_number, rank);
         if(list.size() == 0) {//이 예약 뒤로 대기중인 예약이 없다면
             Repository.updateReservationIsdeleted(oid);
         }
@@ -64,17 +64,17 @@ public class ReservationService {
             Repository.updateReservationIsdeleted(oid);
         }
     }
-    public void modifyReservation(int oid, String input_start_time,int input_people_number, int new_tid, int new_wait, int new_rank) {
+    public void modifyReservation(int oid, String input_start_time,int input_people_number, int new_table_number, int new_wait, int new_rank) {
         ReservationVO vo = Repository.findByOid(oid);
-        int tid = vo.getVal_table_number();
+        int table_number = vo.getVal_table_number();
         int rank = vo.getVal_rank();
         String origin_start_time = vo.getVal_start_time();
 
 
         //변경이전 시간대의 rank영향받는 예약들의 리스트임
-        List<ReservationVO> list = Repository.findAllReservationBytimeAndtidAndRank(origin_start_time, tid, rank);
+        List<ReservationVO> list = Repository.findAllReservationBytimeAndtidAndRank(origin_start_time, table_number, rank);
         if(list.size() == 0) {//이 예약 뒤로 대기중인 예약이 없다면
-            Repository.updateReservationValues(input_people_number, input_start_time, new_tid, new_wait, new_rank, oid);
+            Repository.updateReservationValues(input_people_number, input_start_time, new_table_number, new_wait, new_rank, oid);
         }
 
         else { //이 예약 뒤로 대기중인 예약이 있다면
@@ -84,7 +84,7 @@ public class ReservationService {
                 Repository.updateReservationRank(nowoid);//rank 조절
                 Repository.updateReservationWait(nowoid);//wait 조절
             }
-            Repository.updateReservationValues(input_people_number, input_start_time, new_tid, new_wait, new_rank, oid);
+            Repository.updateReservationValues(input_people_number, input_start_time, new_table_number, new_wait, new_rank, oid);
         }
     }
 
@@ -92,8 +92,8 @@ public class ReservationService {
         return Repository.findByOid(oid);
     }
 
-    public void updateReservationPeopleNumber(int people_num, int oid) {
-        Repository.updateReservationPeopleNumber(people_num, oid);
+    public void updateReservationPeopleNumber(int covers, int oid) {
+        Repository.updateReservationPeopleNumber(covers, oid);
     }
 
     public int countReservationByUser(int oid){ return Repository.countReservationByUser(oid); }

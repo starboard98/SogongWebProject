@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.module.gomodules.VO.CustomerVO;
 import com.module.gomodules.VO.ReservationVO;
+import com.module.gomodules.VO.modefiedReservation;
 import com.module.gomodules.repository.UserRepository;
 import com.module.gomodules.service.ReservationService;
 import com.module.gomodules.service.TableService;
@@ -17,6 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -173,9 +180,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/index")
-    public String index() {
-        return "index";
-    }
+    public String index() {return "index";}
 
     @RequestMapping(value = "/eventReservation")
     public String eventReservation() {
@@ -187,52 +192,52 @@ public class UserController {
         return "noEventReservation";
     }
 
-    @RequestMapping(value = "/showTableView")
+    @RequestMapping(value = "/showTable")
     public String showTableView() {
-        return "showTableView";
+        return "showTable";
     }
 
-//    @RequestMapping(value = "/showUserReservation")
-//    public String showUserReservation(HttpServletRequest request, Model model) { // 예약리스트 조회관련 코드 추가함 ㅁㅁ
-//        HttpSession session = request.getSession(true);// 현재 세션 로드
-//        int currentOid = (int) session.getAttribute("oid");
-//        String currentid = (String) session.getAttribute("id");
-//        List<ReservationVO> list = ReservationService.getReservationListForUser(currentOid);
-//        ArrayList<modefiedReservation> list2 = new ArrayList<modefiedReservation>();
-//        for (ReservationVO vo : list) {
-//            int oid = vo.getVal_oid();
-//            int people_number = vo.getVal_people_number();
-//            int rank = vo.getVal_rank();
-//            int tid = vo.getVal_tid();
-//            String start_time = vo.getVal_start_time();
-//
-//            /// 날짜 형식 변환 코드부분 //////////////////////
-//            SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-//            SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd HH시");
-//
-//            Date date = null;
-//            try {
-//                date = in.parse(start_time);
-//            } catch (ParseException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
-//            String result = out.format(date);
-//            /// 날짜 형식 변환 끝 //////////////////////////
-//
-//            modefiedReservation mReserv = new modefiedReservation();
-//            mReserv.setVal_oid(oid);
-//            mReserv.setVal_people_number(people_number);
-//            mReserv.setVal_rank(rank);
-//            // mReserv.setVal_start_time(start_time);
-//            mReserv.setVal_start_time(result);
-//            mReserv.setVal_tid(tid);
-//            list2.add(mReserv);
-//        }
-//        model.addAttribute("list", list2);
-//        model.addAttribute("userid", currentid);
-//        return "showUserReservation";
-//    }
+    @RequestMapping(value = "/listReservation")
+    public String showUserReservation(HttpServletRequest request, Model model) { // 예약리스트 조회관련 코드 추가함 ㅁㅁ
+        HttpSession session = request.getSession(true);// 현재 세션 로드
+        int currentOid = (int) session.getAttribute("oid");
+        String currentid = (String) session.getAttribute("id");
+        List<ReservationVO> list = ReservationService.getReservationListForUser(currentOid);
+        ArrayList<modefiedReservation> list2 = new ArrayList<modefiedReservation>();
+        for (ReservationVO vo : list) {
+            int oid = vo.getVal_oid();
+            int covers = vo.getVal_covers();
+            int rank = vo.getVal_rank();
+            int table_number = vo.getVal_table_number();
+            String start_time   = vo.getVal_start_time();
+
+            /// 날짜 형식 변환 코드부분 //////////////////////
+            SimpleDateFormat in = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+            SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd HH시");
+
+            Date date = null;
+            try {
+                date = in.parse(start_time);
+            } catch (ParseException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            String result = out.format(date);
+            /// 날짜 형식 변환 끝 //////////////////////////
+
+            modefiedReservation mReserv = new modefiedReservation();
+            mReserv.setVal_oid(oid);
+            mReserv.setVal_covers(vo.getVal_covers());
+            mReserv.setVal_rank(rank);
+            // mReserv.setVal_start_time(start_time);
+            mReserv.setVal_start_time(result);
+            mReserv.setVal_table_number(vo.getVal_table_number());
+            list2.add(mReserv);
+        }
+        model.addAttribute("list", list2);
+        model.addAttribute("userid", currentid);
+        return "listReservation";
+    }
 
     @Autowired
     com.module.gomodules.service.ReservationService ReservationService;
@@ -279,7 +284,7 @@ public class UserController {
         ReservationService.addReservation(vo);
         model.addAttribute("userid", session.getAttribute("id"));
         model.addAttribute("level", session.getAttribute("level"));
-        return "/home";
+        return "/listReservation";
     }
 //
 //    @Autowired
