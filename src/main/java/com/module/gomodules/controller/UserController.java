@@ -41,7 +41,17 @@ public class UserController {
     @Autowired
     ReservationRepository reservationRepository;
 
-
+    @ResponseBody // return to body
+    @RequestMapping(value = "/checkId", method = RequestMethod.POST)
+    public String checkId(HttpServletRequest req, CustomerVO vo){
+        vo.setVal_id(req.getParameter("id"));
+        System.out.print(vo.getVal_id());
+        if (userRepository.findById(vo.getVal_id()) != null) {
+            System.out.println("중복아이디 감지");
+            return "<script> alert('중복된 아이디 입니다.');  location.href= '/signin.html'; </script>";
+        }
+        return "<script> alert('사용가능한 아이디 입니다.');</script>";
+    }
     @ResponseBody // return to body
     @RequestMapping(value = "/joinUs.do", method = RequestMethod.POST)
     public String joinUs(HttpServletRequest req, CustomerVO vo) {
@@ -223,8 +233,11 @@ public class UserController {
             out.flush();
             return "redirect:/noEventReservation";
         }
-
-        ReservationService.addReservation(vo);
-        return "redirect:/listReservation";
+        else{
+            ReservationService.addReservation(vo);
+            out.println("<script>alert('정상적으로 예약되었습니다.'); location.href= '/listReservation';  </script>");
+            out.flush();
+            return "redirect:/listReservation";
+        }
     }
 }
