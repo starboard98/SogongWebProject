@@ -40,6 +40,9 @@ public class ReservationService {
         // TODO Auto-generated method stub
         Repository.deleteReservationbyoid(oid);
     }
+    public ReservationVO findByOid(int oid){
+        return Repository.findByOid(oid);
+    }
 }
 /* 유저의 예약 목록을 불러오는 기능
     public List<ReservationVO> getReservationListForUser(int uid){
@@ -87,10 +90,6 @@ public class ReservationService {
             }
             Repository.updateReservationValues(input_people_number, input_start_time, new_tid, oid);
         }
-    }
-
-    public ReservationVO findByOid(int oid){
-        return Repository.findByOid(oid);
     }
 */
     /*
