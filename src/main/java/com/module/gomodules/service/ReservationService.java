@@ -43,4 +43,13 @@ public class ReservationService {
         Repository.updateReservationValues(people_num, date, start_time, table_number, oid);
         System.out.println("예약 수정 성공");
     }
+    public List<Integer> getReservedTable(String date, String start_time){
+        System.out.println("이미 예약된 테이블 번호 리스트 가져오기");
+        return Repository.reservedTable(date, start_time);
+    }
+
+    public List<ReservationVO> getAllReservation(){
+        System.out.println("모든 예약가져오기");
+        return Repository.findAll();
+    }
 }

@@ -58,10 +58,15 @@
 				<article>
 					<h2 class="major">식사 예약</h2>
 					<hr/>
+					<script th:inline="javascript">
+						let length = [[${length}]];
+						//date start_time table
+						let l = [[${list}]];
+					</script>
 					<form action="/addReservation" method="post">
 						<div class="fields">
 							<div class="field">
-								<label for="date">날짜 </label> <input id="date" name="date" type="date">
+								<label for="date">날짜 </label> <input onchange="getDate(this.value);" id="date" name="date" type="date">
 							</div>
 							<script>
 								let date = new Date();
@@ -75,9 +80,32 @@
 								date.setDate(date.getDate() + 20);
 								let maxday = date.toISOString().substring(0, 10);
 								document.getElementById('date').setAttribute("max",maxday);
+
+								let tm = 11;
+								let dt = today;
+
+								function blindTable(){
+									for(let i=1; i<=8; i++){
+										document.getElementById("t"+l[i][2]).hidden = false;
+									}
+									for(let i=0; i<length; i++){
+										if(l[i][1] == tm && l[i][0] == dt){
+											//alert("true");
+											document.getElementById("t"+l[i][2]).hidden = true;
+										}
+									}
+								}
+								function getTime(t){
+									tm = t;
+									blindTable();
+								}
+								function getDate(d){
+									dt = d;
+									blindTable();
+								}
 							</script>
 							<div class="field">
-								<label for="time">시간</label> <select name="start_time" id="time">
+								<label for="time">시간</label> <select onchange="getTime(this.value);" name="start_time" id="time">
 								<option value="11">11:00</option>
 								<option value="13">13:00</option>
 								<option value="15">15:00</option>
@@ -99,16 +127,17 @@
 							<div class="field">
 								<label for="table">테이블</label>
 								<select name="table_num" id="table">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
+									<option id="t1" value="1">1</option>
+									<option id="t2" value="2">2</option>
+									<option id="t3" value="3">3</option>
+									<option id="t4" value="4">4</option>
+									<option id="t5" value="5">5</option>
+									<option id="t6" value="6">6</option>
+									<option id="t7" value="7">7</option>
+									<option id="t8" value="8">8</option>
 								</select>
 							</div>
+							<script>blindTable();</script>
 						</div>
 						<input type="submit" value="예약 완료" class="primary" />
 					</form>

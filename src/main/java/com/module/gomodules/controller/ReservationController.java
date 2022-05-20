@@ -1,6 +1,5 @@
 package com.module.gomodules.controller;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,13 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 //import com.module.gomodules.EventVO;
 import com.module.gomodules.VO.ReservationVO;
 //import com.module.gomodules.VO.modefiedEvent;
-import com.module.gomodules.VO.modifyingDateAndTime;
-import com.module.gomodules.VO.modifyingReservation;
 //import com.module.gomodules.service.EventService;
 import com.module.gomodules.repository.ReservationRepository;
 import com.module.gomodules.service.ReservationService;
@@ -25,6 +21,7 @@ import com.module.gomodules.repository.UserRepository;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @Controller
 public class ReservationController {
@@ -79,6 +76,21 @@ public class ReservationController {
         r[3] = String.valueOf(vo.getVal_table_number());
         model.addAttribute("old_reservation", r);
         model.addAttribute("reservation_id", oid);
+
+        //예약 정보 불러오기
+        List<ReservationVO> list = ReservationService.getAllReservation();
+        model.addAttribute("length", list.size());
+
+        //예약 정보중 date, time, number쌍을 view로 넘김
+        String[][] rlist = new String[list.size()][3];
+        for(int i=0; i<list.size(); i++){
+            //date start_time table
+            rlist[i][0] = list.get(i).getVal_date();
+            rlist[i][1] = list.get(i).getVal_start_time();
+            rlist[i][2] = list.get(i).getVal_table_number()+"";
+        }
+        model.addAttribute("list", rlist);
+
         return "/modifyReservation";
     }
 
