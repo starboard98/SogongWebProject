@@ -160,7 +160,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/noEventReservation")
-    public String noEventReservation(HttpSession session, HttpServletResponse response) throws IOException {
+    public String noEventReservation(HttpSession session, HttpServletResponse response, Model model) throws IOException {
         if (session.getAttribute("loginCheck") == null) {//세션아이디가 존재하지않는다면 index페이지로 보냄
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
@@ -168,6 +168,20 @@ public class UserController {
             out.flush();
             return "redirect:/index";
         }
+        //예약 정보 불러오기
+        List<ReservationVO> list = ReservationService.getAllReservation();
+        model.addAttribute("length", list.size());
+
+        //예약 정보중 date, time, number쌍을 view로 넘김
+        String[][] r = new String[list.size()][3];
+        for(int i=0; i<list.size(); i++){
+            //date start_time table
+            r[i][0] = list.get(i).getVal_date();
+            r[i][1] = list.get(i).getVal_start_time();
+            r[i][2] = list.get(i).getVal_table_number()+"";
+        }
+        model.addAttribute("list", r);
+        
         return "/noEventReservation";
     }
 
@@ -183,6 +197,7 @@ public class UserController {
             out.flush();
             return "redirect:/index";
         }
+
         List<ReservationVO> list = ReservationService.getReservationList((Integer) session.getAttribute("oid"));
         model.addAttribute("name", session.getAttribute("name"));
         model.addAttribute("length", list.size());
@@ -196,6 +211,7 @@ public class UserController {
             r[i][4] = list.get(i).getVal_table_number()+"";
             r[i][5] = list.get(i).getVal_oid()+"";
         }
+
         model.addAttribute("list", r);
         return "/listReservation";
     }

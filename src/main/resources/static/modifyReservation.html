@@ -66,10 +66,14 @@
             let old_cover = [[${old_reservation}]][0];
             let old_table_number = [[${old_reservation}]][3];
             document.write("<form action=\"/modifyre/"+reservationId+"\" method=\"post\">");
+
+              let length = [[${length}]];
+              //date start_time table
+              let l = [[${list}]];
           </script>
             <div class="fields">
               <div class="field">
-                <label for="date">날짜 </label> <input id="date" name="date" type="date">
+                <label for="date">날짜 </label> <input onchange="getDate(this.value);" id="date" name="date" type="date">
               </div>
               <script>
                 let date = new Date();
@@ -83,10 +87,38 @@
                 date.setDate(date.getDate() + 20);
                 let maxday = date.toISOString().substring(0, 10);
                 document.getElementById('date').setAttribute("max",maxday);
-                document.getElementById('date').value = old_date.toISOString().substring(0, 10);
+
+                //date.setDate(old_date())
+                document.getElementById('date').value = old_date;
+
+                //tm과 dt는 이전데이터로 설정
+                let tm = old_time;
+                let dt = old_date;
+
+                function blindTable(){
+                  for(let i=1; i<=8; i++){
+                    document.getElementById("n"+l[i][2]).hidden = false;
+                  }
+                  for(let i=0; i<length; i++){
+                    if(l[i][1] == tm && l[i][0] == dt){
+                      //alert("true");
+                      document.getElementById("n"+l[i][2]).hidden = true;
+                    }
+                  }
+                  //과거 테이블 번호는 항상 보이게.
+                  document.getElementById(("n"+old_table_number)).hidden = false;
+                }
+                function getTime(t){
+                  tm = t;
+                  blindTable();
+                }
+                function getDate(d){
+                  dt = d;
+                  blindTable();
+                }
               </script>
               <div class="field">
-                <label for="time">시간</label> <select name="start_time" id="time">
+                <label for="time">시간</label> <select onchange="getTime(this.value);" name="start_time" id="time">
                 <option id="t11" value="11">11:00</option>
                 <option id="t13" value="13">13:00</option>
                 <option id="t15" value="15">15:00</option>
@@ -119,6 +151,7 @@
                 </select>
               </div>
               <script>
+                blindTable();
                 document.getElementById("t"+old_time).setAttribute("selected", "selected");
                 document.getElementById("p"+old_cover).setAttribute("selected", "selected");
                 document.getElementById("n"+old_table_number).setAttribute("selected", "selected");

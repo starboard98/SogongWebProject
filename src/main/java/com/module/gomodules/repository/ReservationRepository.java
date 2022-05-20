@@ -53,4 +53,9 @@ public interface ReservationRepository extends JpaRepository<ReservationVO, Long
     @Query("SELECT COUNT(*) FROM RESERVATION WHERE date=?1 and start_time=?2 and table_number=?3 and oid=?4")
     public int isSelf(String date, String start_time, int table_number, int oid);
 
+    //날짜와 시간이 같으면
+    @Query("SELECT table_number FROM RESERVATION WHERE date=?1 and start_time=?2")
+    public List<Integer> reservedTable(String date, String start_time);
+
+    public List<ReservationVO> findAll();
 }
