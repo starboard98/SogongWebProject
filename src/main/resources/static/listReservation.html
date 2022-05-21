@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-<<<<<<< Updated upstream
-        <title>Clean Blog - Start Bootstrap Theme</title>
-=======
         <title>SE Team Semicolon - Reservation List</title>
->>>>>>> Stashed changes
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -101,10 +97,7 @@
             }
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="js/lightbox.js">
-            //////////// lightbox띠워주기 ///////////
-            getsize(3);
-        </script>
+        <script src="js/lightbox.js"></script>
         <!-- 라이트박스 end -->
     </head>
     <body>
@@ -119,17 +112,10 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                       <!--  상단 메뉴 바  -->
-<<<<<<< Updated upstream
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">로그아웃</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="listReservation.html">예약조회</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="noEventReservation.html">좌석예약</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="menu.html">메뉴 판</a></li>
-=======
                       <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="font-size: 13px" href="/listReservation">예약조회</a></li>
                       <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="font-size: 13px" href="/noEventReservation">좌석예약</a></li>
                       <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="font-size: 13px" href="menu.html">메뉴 판</a></li>
                       <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" style="font-size: 13px" href="/logOut">로그아웃</a></li>
->>>>>>> Stashed changes
                     </ul>
                 </div>
             </div>
@@ -140,13 +126,8 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="page-heading">
-<<<<<<< Updated upstream
-                            <h2>예약조회</h2>
-                            <span class="subheading">{$name}님의 예약목록입니다.</span>
-=======
                             <h2></h2>
                             <span th:text="${name}" class="subheading" style="font-size: 40px"></span><span style="font-size: 40px">님의 예약목록입니다.</span>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -170,16 +151,24 @@
                              <th scope="col">번호</th>
                              <th scope="col">이름</th>
                              <th scope="col">날짜</th>
+                             <th scope="col">시간</th>
                              <th scope="col">인원</th>
                            </tr>
                          </thead>
                         <tbody>
-                            <tr class="paper">
-                              <th scope="row">{id}</th>
-                              <td>{name}</td>
-                              <td>{YY-MM-DD} {time}</td>
-                              <td>{인원}</td>
-                            </tr>
+                        <script th:inline="javascript">
+                            //name covers date start_time table_number
+                            let length = [[${length}]];
+                            let l = [[${list}]];
+                            for(let i=0; i<length; i++){
+                                document.write("<tr class=\"paper\">")
+                                document.write("<th scope=\"row\">"+(i+1)+"</th>")
+                                document.write("<td>"+l[i][0]+"</td>")
+                                document.write("<td>"+l[i][2]+"</td>")
+                                document.write("<td>"+l[i][3]+"시</td>")
+                                document.write("<td>"+l[i][1]+"명</td></tr>")
+                            }
+                        </script>
                       <!--
                             <tr class="paper">
                               <th scope="row">265</th>
@@ -200,7 +189,33 @@
                         <!-- 테이블 사진은 임시로 넣어두었습니다.-->
                         <!-- 사용자이름, 시간, 테이블번호에 대해 view해주고,
                         수정페이지로 예약테이블의 id값을 get방식으로 넘기는 방식으로 하면 될것 같습니다.-->
-                      <div id="box">
+                        <div id="box">
+                        <script>
+                            //name / covers / date / start_time / table_number
+                            for(let k=0; k<length; k++) {
+                                document.write("<div id=\"darken-background\"><div id=\"lightbox\"><div class=\"user-information\"><div class=\"user-information-text\"><h3>예약 정보 조회</h3></div></div>");
+                                document.write("<hr class=\"lightbox-splitter\" /><div>");
+
+                                for (let i = 1; i <= 8; i++) {
+                                    let pop = 3;    //pop은 테이블에 앉을 수 있는 인원 수 2인 또는 4인 또는 6인
+                                    document.write("<div id=\'st"+k+""+i+"\' style=\'margin: 30px; border: 3px solid #fcc6f7; width:" + 50 * pop + "px; height:100px; display: inline-block; text-align: center; line-height: 100px;\'>" + i + "번</div>")
+                                }
+                                // 전체 좌석 수 만큼 반복, 4번좌석을 선택했다는 의미, 대신에, 유저가 예약한 좌석번호를 db에서 받아와 넣으시면 됩니다.
+                                let a = "st"+k+""+l[k][4]; // "st" + {$예약좌석}
+                                document.getElementById(a).style.backgroundColor = "#caa6fe";
+
+                                document.write("</div><br>");
+                                document.write("<h5>"+l[k][0]+"님의 예약정보입니다.</h5>");
+                                document.write("<h6>"+l[k][2]+"</h6>");
+                                document.write("<h6>"+l[k][3]+"시</h6><h6>"+l[k][4]+"번 테이블("+l[k][1]+"명)</h6>");
+                                document.write("<div style=\"float: right\">");
+                                document.write("<a class=\"btn-a hover1\" href=\"modifyReservation/"+l[k][5]+"\">예약수정</a>&nbsp;");
+                                document.write("<a class=\"btn-a hover1\" href=\"callDeleteReserve/"+l[k][5]+"\">예약취소</a>");
+                                document.write("</div></div></div>");
+                            }
+                        </script>
+                        </div>
+                          <!--
                         <div id="darken-background">
                             <div id="lightbox">
                               <div class="user-information">
@@ -210,15 +225,15 @@
                               </div>
                               <hr class="lightbox-splitter" />
                                 <div>
-                                <script>
-                                    for(let i=0; i<12; i++) {
+
+                                    for(let i=0; i<8; i++) {
                                         let pop = 3;    //pop은 테이블에 앉을 수 있는 인원 수 2인 또는 4인 또는 6인
                                         document.write("<div id=\'st"+ i +"\' style=\'margin: 30px; border: 3px solid #fcc6f7; width:"+ 50*pop +"px; height:100px; display: inline-block; text-align: center; line-height: 100px;\'>"+i+"번</div>")
                                     }
                                     // 전체 좌석 수 만큼 반복, 4번좌석을 선택했다는 의미, 대신에, 유저가 예약한 좌석번호를 db에서 받아와 넣으시면 됩니다.
                                     let a = "st" + 4; // "st" + {$예약좌석}
                                     document.getElementById(a).style.backgroundColor = "#caa6fe";
-                                </script>
+
                                 </div>
                             <br>
                               <h5>김호준님의 예약정보입니다.</h5>
@@ -230,45 +245,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div id="darken-background">
-                            <div id="lightbox">
-                              <div class="user-information">
-                                <div class="user-information-text">
-                                  <h3>예약 정보 조회</h3>
-                                </div>
-                              </div>
-                              <hr class="lightbox-splitter" />
-                              <img alt="" class="#" src="assets/img/table_ex1.jpg" />
-                            <br>
-                              <h5>홍길동님의 예약정보입니다.</h5>
-                              <h6>2022-05-06</h6>
-                              <h6>14:00 ~ 15:30</h6><h6>1번 테이블</h6>
-                                <div style="float: right">
-                                    <a class="btn-a hover1" href="modifyReservation.html?1d=2">예약수정</a>&nbsp;
-                                    <a class="btn-a hover1" onclick="showConfirm()">예약취소</a>
-                                </div>
-                            </div>
-                        </div>
-                          <!--
-                        <div id="darken-background">
-                            <div id="lightbox">
-                              <div class="user-information">
-                                <div class="user-information-text">
-                                  <h3>예약 정보 조회</h3>
-                                </div>
-                              </div>
-                              <hr class="lightbox-splitter" />
-                              <img alt="" class="#" src="assets/img/table_ex1.jpg" />
-                            <br>
-                              <h5>[사용자이름]님의 예약정보입니다.</h5>
-                              <h6>[년-월-일]</h6>
-                              <h6>[시간 ~ 시간+a]</h6><h6>[테이블번호]번 테이블</h6>
-                            </div>
-                        </div>
 라이트박스 END-->
                           <!--예약 END-->
-                      </div>
 
 
                     </div>

@@ -15,10 +15,4 @@ public interface UserRepository extends JpaRepository<CustomerVO, Long> {
 
     @Query("SELECT a FROM USER a WHERE a.oid = ?1")
     public CustomerVO findByUid(int id);
-
-
-    @Transactional
-    @Modifying(clearAutomatically = true)
-    @Query("UPDATE USER SET noshow = noshow + 1 WHERE oid = ?1")
-    public int increaseNoShowCount(int uid);
 }

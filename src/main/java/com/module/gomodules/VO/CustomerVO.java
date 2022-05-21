@@ -14,8 +14,6 @@ public class CustomerVO {
     private String name;
     private String password;
     private String phonenumber;
-    private int level;
-    private int noshow;
 
 
     public void setVal_id(String val) { this.id = val; }
@@ -31,10 +29,6 @@ public class CustomerVO {
     public void setVal_oid(int val) {
         this.oid = val;
     }
-    public void setVal_level(int val) {
-        this.level = val;
-    }
-    public void setVal_noshow(int val) { this.noshow = val; }
 
     public String getVal_id() {
         return this.id;
@@ -50,12 +44,6 @@ public class CustomerVO {
     }
     public int getVal_oid() {
         return this.oid;
-    }
-    public int getVal_level() {
-        return this.level;
-    }
-    public int getVal_noshow() {
-        return this.noshow;
     }
 }
 

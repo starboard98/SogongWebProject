@@ -1,52 +1,6 @@
 <!DOCTYPE html>
-<!--
-	Dimension by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<<<<<<< Updated upstream
-<meta charset="UTF-8">
-<title>식사예약</title>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
-
-<!--===============================================================================================-->
-
-
-<link rel="stylesheet" href="css/main.css" />
-<noscript>
-	<link rel="stylesheet" href="css/noscript.css" />
-</noscript>
-
-</head>
-<body class="is-preload">
-
-	<!-- Wrapper -->
-	<div id="wrapper">
-		<article>
-			<h2 class="major">식사 예약</h2>
-			<form action="/addReservation" method="post">
-				<div class="fields">
-					<div class="field">
-						<label for="date">날짜 </label> <input style="color: darkblue;"
-							id="date" name="date" type="date">
-					</div>
-					<script>
-						let date = new Date();
-						date.setDate(date.getDate() + 1);
-						let today = date.toISOString().substring(0, 10);
-						//다음날 예약가능
-						document.getElementById('date').value = today
-						//이전날짜 불가능하게
-						document.getElementById('date').setAttribute("min",today);
-						//3주간 예약가능
-						date.setDate(date.getDate() + 20);
-						let maxday = date.toISOString().substring(0, 10);
-						document.getElementById('date').setAttribute("max",maxday);
-=======
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
@@ -107,65 +61,95 @@
 						let length = [[${length}]];
 						//date start_time table
 						let l = [[${list}]];
->>>>>>> Stashed changes
 					</script>
-					<div class="field">
-						<label for="time">시간</label> <select name="time" id="time">
-							<option value="11">11:00</option>
-							<option value="12">12:00</option>
-							<option value="13">13:00</option>
-							<option value="14">14:00</option>
-							<option value="17">17:00</option>
-							<option value="18">18:00</option>
-							<option value="19">19:00</option>
-							<option value="20">20:00</option>
-						</select>
-					</div>
-					<div class="field">
-						<label for="num_people">인원</label> <select name="num_people"
-							id="num_people">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-						</select>
-					</div>
-					<div class="field">
-						<label for="table">table</label> <select name="table" id="table">
-							<option value="auto">자동배정</option>
-						</select>
-					</div>
-				</div>
-				<ul class="actions">
-					<li><input type="submit" value="예약 완료" class="primary" /></li>
-					<li><input type="button" value="홈" onclick="location.href='home.html';" /></li>
+					<form action="/addReservation" method="post">
+						<div class="fields">
+							<div class="field">
+								<label for="date">날짜 </label> <input onchange="getDate(this.value);" id="date" name="date" type="date">
+							</div>
+							<script>
+								let date = new Date();
+								date.setDate(date.getDate() + 1);
+								let today = date.toISOString().substring(0, 10);
+								//다음날 예약가능
+								document.getElementById('date').value = today
+								//이전날짜 불가능하게
+								document.getElementById('date').setAttribute("min",today);
+								//3주간 예약가능
+								date.setDate(date.getDate() + 20);
+								let maxday = date.toISOString().substring(0, 10);
+								document.getElementById('date').setAttribute("max",maxday);
 
+								let tm = 11;
+								let dt = today;
 
-				</ul>
-			</form>
-		</article>
-
-
-		<!-- Footer -->
-		<footer id="footer">
-			<p class="copyright">
-				&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.
-			</p>
-		</footer>
-
+								function blindTable(){
+									for(let i=1; i<=8; i++){
+										document.getElementById("t"+l[i][2]).hidden = false;
+									}
+									for(let i=0; i<length; i++){
+										if(l[i][1] == tm && l[i][0] == dt){
+											//alert("true");
+											document.getElementById("t"+l[i][2]).hidden = true;
+										}
+									}
+								}
+								function getTime(t){
+									tm = t;
+									blindTable();
+								}
+								function getDate(d){
+									dt = d;
+									blindTable();
+								}
+							</script>
+							<div class="field">
+								<label for="time">시간</label> <select onchange="getTime(this.value);" name="start_time" id="time">
+								<option value="11">11:00</option>
+								<option value="13">13:00</option>
+								<option value="15">15:00</option>
+								<option value="17">17:00</option>
+								<option value="19">19:00</option>
+								<option value="21">21:00</option>
+							</select>
+							</div>
+							<div class="field">
+								<label for="num_people">인원</label> <select name="num_people" id="num_people">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+							</select>
+							</div>
+							<div class="field">
+								<label for="table">테이블</label>
+								<select name="table_num" id="table">
+									<option id="t1" value="1">1</option>
+									<option id="t2" value="2">2</option>
+									<option id="t3" value="3">3</option>
+									<option id="t4" value="4">4</option>
+									<option id="t5" value="5">5</option>
+									<option id="t6" value="6">6</option>
+									<option id="t7" value="7">7</option>
+									<option id="t8" value="8">8</option>
+								</select>
+							</div>
+							<script>blindTable();</script>
+						</div>
+						<input type="submit" value="예약 완료" class="primary" />
+					</form>
+				</article>
+			</div>
+		</div>
 	</div>
-
-	<!-- BG -->
-	<div id="bg"></div>
-
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
-
+</main>
+<footer class="border-top">
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
 </body>
 </html>
