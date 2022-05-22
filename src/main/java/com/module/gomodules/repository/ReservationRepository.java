@@ -22,8 +22,8 @@ public interface ReservationRepository extends JpaRepository<ReservationVO, Long
     @Query("SELECT COUNT(*) FROM RESERVATION WHERE start_time between ?1 and ?2")
     public int numberOfReservationByTime(String t1, String t2);
 
-//    @Query("SELECT a FROM RESERVATION a WHERE a.start_time = ?1 AND a.table_number = ?2 AND a.rank > ?3 ORDER BY a.rank asc")//확인필요
-//    public List<ReservationVO> findAllReservationBytimeAndtidAndRank(String start_time, int table_number, int rank);
+    @Query("SELECT re FROM RESERVATION re WHERE re.date >= '2022-05-22'")
+    public List<ReservationVO> findReservationOfDate();
 
     @Transactional
     @Modifying(clearAutomatically = true)
