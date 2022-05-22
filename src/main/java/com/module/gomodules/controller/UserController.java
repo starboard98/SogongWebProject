@@ -114,7 +114,13 @@ public class UserController {
             session.setAttribute("loginCheck", true);
             session.setAttribute("id", id);
             session.setAttribute("name", name);
-            return "<script> alert('" + session.getAttribute("name") + "님 로그인 되셨습니다!'); location.href= '/home'; </script>";
+            String userId = session.getAttribute("id").toString();
+            if (userId.equals("admin")) {
+                return "<script> alert('관리자님 로그인 되셨습니다!'); location.href= '/admin'; </script>";
+            }
+            else {
+                return "<script> alert('" + session.getAttribute("name") + "님 로그인 되셨습니다!'); location.href= '/home'; </script>";
+            }
         } else {
             System.out.println("False");
             return "<script> alert('아이디와 비밀번호가 일치하지 않습니다.');  location.href= '/index.html'; </script>";
