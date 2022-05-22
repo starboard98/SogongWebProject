@@ -6,7 +6,9 @@ import javax.servlet.http.HttpSession;
 
 import com.module.gomodules.VO.CustomerVO;
 import com.module.gomodules.VO.ReservationVO;
+import com.module.gomodules.VO.TableVO;
 import com.module.gomodules.repository.ReservationRepository;
+import com.module.gomodules.repository.TableRepository;
 import com.module.gomodules.repository.UserRepository;
 import com.module.gomodules.service.ReservationService;
 //import com.module.gomodules.service.TableService;
@@ -40,6 +42,9 @@ public class UserController {
 
     @Autowired
     ReservationRepository reservationRepository;
+
+    @Autowired
+    TableRepository tableRepository;
 
     @ResponseBody // return to body
     @RequestMapping(value = "/checkId", method = RequestMethod.POST)
@@ -114,13 +119,7 @@ public class UserController {
             session.setAttribute("loginCheck", true);
             session.setAttribute("id", id);
             session.setAttribute("name", name);
-            String userId = session.getAttribute("id").toString();
-            if (userId.equals("admin")) {
-                return "<script> alert('관리자님 로그인 되셨습니다!'); location.href= '/admin'; </script>";
-            }
-            else {
-                return "<script> alert('" + session.getAttribute("name") + "님 로그인 되셨습니다!'); location.href= '/home'; </script>";
-            }
+            return "<script> alert('" + session.getAttribute("name") + "님 로그인 되셨습니다!'); location.href= '/home'; </script>";
         } else {
             System.out.println("False");
             return "<script> alert('아이디와 비밀번호가 일치하지 않습니다.');  location.href= '/index.html'; </script>";
@@ -187,6 +186,10 @@ public class UserController {
             r[i][2] = list.get(i).getVal_table_number()+"";
         }
         model.addAttribute("list", r);
+
+        List<TableVO> table;
+        table = tableRepository.findAll();
+        model.addAttribute("table", table);
         
         return "/noEventReservation";
     }

@@ -126,14 +126,17 @@
 							<div class="field">
 								<label for="table">테이블</label>
 								<select name="table_num" id="table">
-									<option id="t1" value="1">1</option>
-									<option id="t2" value="2">2</option>
-									<option id="t3" value="3">3</option>
-									<option id="t4" value="4">4</option>
-									<option id="t5" value="5">5</option>
-									<option id="t6" value="6">6</option>
-									<option id="t7" value="7">7</option>
-									<option id="t8" value="8">8</option>
+<!--									<option id="t1" value="1">1</option>-->
+<!--									<option id="t2" value="2">2</option>-->
+<!--									<option id="t3" value="3">3</option>-->
+<!--									<option id="t4" value="4">4</option>-->
+<!--									<option id="t5" value="5">5</option>-->
+<!--									<option id="t6" value="6">6</option>-->
+<!--									<option id="t7" value="7">7</option>-->
+<!--									<option id="t8" value="8">8</option>-->
+									<option th:each="val : ${table}" th:value="${val.getVal_number()}"
+											th:utext="${val.getVal_number()}">
+									</option>
 								</select>
 							</div>
 							<script>blindTable();</script>
