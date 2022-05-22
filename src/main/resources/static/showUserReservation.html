@@ -124,8 +124,8 @@
                 <td>날짜</td>
                 <td>테이블번호</td>
                 <td>인원수</td>
-                <td>앞 대기열</td>
-                <td>노쇼 등록</td>
+<!--                <td>앞 대기열</td>-->
+<!--                <td>노쇼 등록</td>-->
             </tr>
             </thead>
             <tr th:each="reservationList : ${reservationList}">
@@ -134,12 +134,12 @@
                 <td th:text="${reservationList.val_table_number}"></td>
                 <td th:text="${reservationList.val_covers}"></td>
                 <td></td>
-                <td>
-                    <form action="/increaseNoShow.do" style="width: 94px;">
-                        <input type="hidden" name="uid"
-                               th:value="${reservationList.val_uid}"/> <input type="submit" value="노쇼">
-                    </form>
-                </td>
+<!--                <td>-->
+<!--                    <form action="/increaseNoShow.do" style="width: 94px;">-->
+<!--                        <input type="hidden" name="uid"-->
+<!--                               th:value="${reservationList.val_uid}"/> <input type="submit" value="노쇼">-->
+<!--                    </form>-->
+<!--                </td>-->
             </tr>
         </table>
     </article>
