@@ -31,16 +31,6 @@ public class ReservationController {
     ReservationRepository ReservationRepository;
     @Autowired
     UserRepository userRepository;
-/* 예약 삭제 기능, 하나는 관리자페이지 하나는 유저가 삭제
-    @ResponseBody
-    @RequestMapping(value = "/cancleReservation.do")
-    public String cancleReservation(HttpServletRequest request, Model model) {
-        int cancleoid = Integer.parseInt(request.getParameter("cancleoid"));
-        ReservationVO vo = ReservationService.findByOid(cancleoid); //취소할 예약의 vo
-        ReservationService.removeReservationForUser(vo);
-        return "<script> alert('삭제 완료');  location.href= '/listReservation'; </script>";
-    }
-*/
 
     @RequestMapping(value = "/callDeleteReserve/{oid}", produces = "text/html; charset=UTF-8")
     public String callDeleteReserve(@PathVariable int oid, HttpSession session, HttpServletResponse response) throws IOException {

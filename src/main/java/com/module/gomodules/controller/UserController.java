@@ -75,18 +75,7 @@ public class UserController {
         userService.joinUser(vo);
         return "<script> alert('가입 되었습니다.'); location.href= '/index.html'; </script>";
     }
-/*
-    @RequestMapping(value = "/join")
-    public String join() {
-        return "join";
-    }
 
-    @RequestMapping(value = "/failed")
-    public String failed() {
-        System.out.print("nooo..");
-        return "failed";
-    }
-*/
     //로그인 : 로그인시 세션부여
     @ResponseBody // return to body
     @PostMapping(value = "/signIn.do", produces = "text/html; charset=UTF-8")
@@ -114,7 +103,13 @@ public class UserController {
             session.setAttribute("loginCheck", true);
             session.setAttribute("id", id);
             session.setAttribute("name", name);
-            return "<script> alert('" + session.getAttribute("name") + "님 로그인 되셨습니다!'); location.href= '/home'; </script>";
+            String userId = session.getAttribute("id").toString();
+            if (userId.equals("admin")) {
+                return "<script> alert('관리자님 로그인 되셨습니다!'); location.href= '/admin'; </script>";
+            }
+            else {
+                return "<script> alert('" + session.getAttribute("name") + "님 로그인 되셨습니다!'); location.href= '/home'; </script>";
+            }
         } else {
             System.out.println("False");
             return "<script> alert('아이디와 비밀번호가 일치하지 않습니다.');  location.href= '/index.html'; </script>";
