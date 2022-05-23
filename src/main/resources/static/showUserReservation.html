@@ -61,6 +61,7 @@
                         <thead>
                         <tr>
                             <th scope="col">고유번호</th>
+                            <th scope="col">예약자</th>
                             <th scope="col">날짜</th>
                             <th scope="col">시간</th>
                             <th scope="col">테이블번호</th>
@@ -70,6 +71,7 @@
                         <tbody>
                         <tr th:each="reservationList : ${reservationList}">
                             <td th:text="${reservationList.val_oid}"></td>
+                            <td th:text="${reservationList.val_name}"></td>
                             <td th:text="${reservationList.val_date}"></td>
                             <td th:text="${reservationList.val_start_time}+'시'"></td>
                             <td th:text="${reservationList.val_table_number}+'번'"></td>
