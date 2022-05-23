@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+<html>
 <head>
     <meta charset="UTF-8">
     <title>관리자</title>
@@ -16,112 +17,14 @@
           rel="stylesheet" type="text/css"/>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet"/>
-
-    <!-- 라이트박스 -->
-    <style>
-            #darken-background {
-                position: absolute;
-                top: 0; left: 0; right: 0;
-                height: 100%;
-
-                display: none;
-                background: rgba(0, 0, 0, 0.9);
-                z-index: 10000;
-                overflow-y: scroll;
-            }
-
-            #lightbox {
-                width: 700px;
-                margin: 60px auto; padding: 30px 15px;
-
-                border: 1px solid #333333;
-                border-radius: 5px;
-                background: white;
-                box-shadow: 0 5px 5px rgba(34, 25, 25, 0.4);
-
-                text-align: center;
-            }
-            @media screen and (max-width: 767px){
-              #darken-background {
-                position: absolute;
-                top: 0; left: 0; right: 0;
-                width: 100%;
-                height: 100%;
-
-                display: none;
-                background: rgba(0, 0, 0, 0.9);
-                z-index: 10000;
-                overflow-y: scroll;
-              }
-              #lightbox{
-                width: auto;
-                margin: 40px auto; padding: 5px;
-
-                border: 1px solid #333333;
-                border-radius: 5px;
-                background: white;
-                box-shadow: 0 5px 5px rgba(34, 25, 25, 0.4);
-              }
-            }
-            .user-information {  overflow: hidden;  text-align: left; }
-            .user-information-image { float: left; width: 70px; }
-            .user-information-text { float: right; width: 620px;  }
-            .lightbox-splitter { margin: 10px 0; }
-            .box-img{
-              max-width: 100%;
-              height: auto;
-            }
-    </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/lightbox.js">//////////// lightbox띠워주기 ///////////</script>
-    <!-- 라이트박스 end -->
-    <script>
-	function addTable() {
-		window.open("/locateAddTable.do", "a",
-				"width=400, height=300, left=100, top=50");
-		//location.href="/locateAddTable.do";
-	}
-
-	function showTable() {
-		window.open("/locateShowTable.do", "a",
-				"width=400, height=600, left=100, top=50");
-		//location.href="/locateShowTable.do";
-	}
-
-	function showReservationByMonth() {
-		window.open("/showReservationByMonth.do", "a",
-				"width=400, height=500, left=100, top=50");
-		//location.href="/showReservationByMonth.do";
-	}
-
-	function showReservation() {
-		window.open("/showReservation.do", "a",
-				"width=800, height=1200, left=100, top=50");
-		//location.href="/showReservation.do"
-	}
-	function showReservationAll() {
-		window.open("/showReservationAll.do", "a",
-				"width=800, height=1200, left=100, top=50");
-		//location.href="/showReservation.do"
-	}
-
-	function manageNoShow(){
-		window.open("/manageNoShow.do", "a",
-				"width=400, height=300, left=100, top=50");
-	}
-    function showUserList(){
-    	window.open("/showUserList.do", "a",
-				"width=800, height=1200, left=100, top=50");
-
-    }
-    </script>
+    <link href="css/button.css" rel="stylesheet"/>
 </head>
 
 <body class="is-preload">
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="index.html">관리자님 환영합니다.</a>
+        <a class="navbar-brand" href="/admin">관리자님 환영합니다.</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
@@ -130,19 +33,15 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
                 <!--  상단 메뉴 바  -->
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logOut.do">logout</a></li>
-
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/admin">관리자 홈</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logOut">로그아웃</a></li>
             </ul>
         </div>
     </div>
 
 </nav>
 <!-- Page Header-->
-<header class="masthead" style="background-image: url('assets/img/image_about.jpg')">
+<header class="masthead" style="background-color: #b5c7ed">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
@@ -153,44 +52,37 @@
         </div>
     </div>
 </header>
-
-<!-- Wrapper -->
+<script>
+    $('a').click(function(event){
+        event.preventDefault();
+    });
+</script>
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
 <div id="wrapper">
-
-    <!-- Header -->
-    <header id="header">
-        <div class="logo">
-            <span class="icon fa-gem"></span>
-        </div>
-        <table align="center">
-            <tr>
-                <td onclick="showUserList()"><a href=#>회원 목록</a></td>
-            </tr>
-            <tr>
-                <td onclick="showReservationAll()"><a href=#>전체 예약 기록</a></td>
-            </tr>
-            <!--  <a href="/showReservation.do">예약정보</a>  <input type="submit" value="예약 정보">
-            <form action="/showReservation.do" style='height:2.25rem'>
-            <input type="submit" value="예약 정보">
-            </form>-->
-            <tr>
-                <td onclick="showReservation()"><a href=#>현재 예약 정보</a></td>
-            </tr>
-            <tr>
-                <td onclick="showTable()"><a href=#>테이블보기</a></td>
-            </tr>
-            <tr>
-                <td onclick="addTable()"><a href=#>테이블 추가</a></td>
-            </tr>
-            <tr>
-                <td onclick="showReservationByMonth()"><a href=#>월별추이</a></td>
-            </tr>
-            <!--<tr><td onclick="manageNoShow()"><a href=#>노쇼 관리</a></td></tr> -->
-
-        </table>
-    </header>
-
+    <h2>관리자 메뉴</h2><br/>
+    <div>
+        <ul style="list-style: none">
+            <li><a href="/showUserList.do" class="btn-gradient red block">사용자 관리</a></li>
+            <li><a href="/showReservationAll.do" class="btn-gradient orange block">전체 예약 기록</a></li>
+            <li><a href="/showReservation.do" class="btn-gradient yellow block">현재 예약 정보</a></li>
+            <!--
+            <li><a href="#" class="btn-gradient purple block">Block Button</a></li>
+            <li><a href="#" class="btn-gradient green block">Block Button</a></li>
+            <li><a href="#" class="btn-gradient yellow block">Block Button</a></li>
+            <li><a href="#" class="btn-gradient red block">Block Button</a></li>
+            <li><a href="#" class="btn-gradient blue block">Block Button</a></li>
+            <li><a href="#" class="btn-gradient cyan block">Block Button</a></li>
+            -->
+        </ul>
+        <br/>
+    </div>
 </div>
+        </div>
+    </div>
+</div>
+</body>
 
 <!-- BG -->
 <div id="bg"></div>
@@ -236,13 +128,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="js/scripts.js"></script>
-
-<!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
-
-</body>
 </html>
