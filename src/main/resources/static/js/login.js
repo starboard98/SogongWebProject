@@ -17,10 +17,10 @@
             else {
                 $(this).removeClass('has-val');
             }
-        })    
+        })
     })
-  
-  
+
+
     /*==================================================================
     [ Validate ]*/
     var input = $('.validate-input .input100');
@@ -41,7 +41,7 @@
 
     $('.validate-form .input100').each(function(){
         $(this).focus(function(){
-           hideValidate(this);
+            hideValidate(this);
         });
     });
 
@@ -69,6 +69,6 @@
 
         $(thisAlert).removeClass('alert-validate');
     }
-    
+
 
 })(jQuery);
