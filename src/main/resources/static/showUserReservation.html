@@ -16,6 +16,54 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet"/>
     <!-- 라이트박스 end -->
+    <script type="text/javascript">
+        function getModify() {
+            const oid = event.target.id;
+            document.getElementById("oid").value=oid;
+        }
+
+
+
+        function getDelete() {
+
+            const genderNodeList = document.getElementsByName('radiotext');
+
+            genderNodeList.forEach((node) => {
+                if(node.checked)  {
+                    //alert(node.value);
+
+
+                    Swal.fire({
+                        title: '정말 삭제 하시겠습니까?',
+                        text: "예약을 삭제하시면 복구하실수 없습니다",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: '삭제',
+                        cancelButtonText: '취소'
+                    }).then((result) => {
+
+                        if (result.isConfirmed) {
+                            //삭제 부분
+                            setTimeout(function(){
+                                location.href="/callDeleteReserve/"+node.value;
+                            },2000);
+
+                            Swal.fire(
+                                'Deleted',
+                                'Your reservation has been deleted.',
+                                'success'
+                            )
+
+
+                        }
+                    })
+                }
+            })
+        }
+
+    </script>
 </head>
 <body class="is-preload">
 <!-- Navigation-->
@@ -73,6 +121,12 @@
                             <td th:text="${reservationList.val_start_time}+'시'"></td>
                             <td th:text="${reservationList.val_table_number}+'번'"></td>
                             <td th:text="${reservationList.val_covers}+'명'"></td>
+                            <td>
+                                <form action="/deleteAll.do" style="width: 94px;">
+                                    <input type="hidden" name="oid"
+                                           th:value="${reservationList.val_oid}"/> <input type="submit" value="삭제">
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

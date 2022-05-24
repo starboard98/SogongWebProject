@@ -7,8 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 //import com.module.gomodules.EventVO;
 import com.module.gomodules.VO.ReservationVO;
@@ -32,6 +31,39 @@ public class ReservationController {
     @Autowired
     UserRepository userRepository;
 
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteAll.do", produces = "text/html; charset=utf-8")
+    public String deleteAll(HttpServletRequest request){
+        int oid;
+
+        if(request.getParameter("oid") =="") {
+            return "<script> alert('회원 정보를 받아오지 못했습니다.');  location.href= '/showReservationAll.do'; </script>";
+        }
+        oid = Integer.parseInt(request.getParameter("oid"));
+
+        ReservationService.deleteReservationbyoid(oid);
+
+        return "<script> alert('삭제되었습니다.'); location.href= '/showReservationAll.do'; </script>";
+        //return "<script> window.close();</script>";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/delete.do", produces = "text/html; charset=utf-8")
+    public String delete(HttpServletRequest request){
+        int oid;
+
+        if(request.getParameter("oid") =="") {
+            return "<script> alert('회원 정보를 받아오지 못했습니다.');  location.href= '/showReservation.do'; </script>";
+        }
+        oid = Integer.parseInt(request.getParameter("oid"));
+
+        ReservationService.deleteReservationbyoid(oid);
+
+        return "<script> alert('삭제되었습니다.'); location.href= '/showReservation.do'; </script>";
+        //return "<script> window.close();</script>";
+    }
+
     @RequestMapping(value = "/callDeleteReserve/{oid}", produces = "text/html; charset=UTF-8")
     public String callDeleteReserve(@PathVariable int oid, HttpSession session, HttpServletResponse response) throws IOException {
         response.setContentType("text/html; charset=UTF-8");
@@ -47,6 +79,7 @@ public class ReservationController {
         out.flush();
         return "redirect:/listReservation";
     }
+
 
     @RequestMapping(value = "/modifyReservation/{oid}", produces = "text/html; charset=UTF-8")
     public String showTableView(@PathVariable int oid, HttpServletRequest request, Model model, HttpSession session, HttpServletResponse response) throws IOException {
